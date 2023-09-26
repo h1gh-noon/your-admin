@@ -1,0 +1,51 @@
+
+/* 行为相关颜色 */
+$style-color-primary: #007aff;
+$style-color-success: #4cd964;
+$style-color-warning: #f0ad4e;
+$style-color-error: #dd524d;
+
+$style-color-blue1: #00aaff;
+$style-color-blue2: #2aa1ff;
+$style-color-blue3: #51c4d3;
+
+/* 文字基本颜色 */
+$style-text-color: #333; // 基本色
+$style-text-color-inverse: #fff; // 反色
+$style-text-color-grey: #999; // 辅助灰色
+$style-text-color-placeholder: #808080;
+$style-text-color-disable: #c0c0c0;
+
+/* 背景颜色 */
+$style-bg-color: #fff;
+$style-bg-color-grey: #f8f8f8;
+$style-bg-color-hover: #f1f1f1;
+$style-bg-color-mask: rgba(0, 0, 0, 0.4);
+
+/* 边框颜色 */
+$style-border-color: #c8c7cc;
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 5px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: #fff;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  height: 5px;
+  background-color: $style-color-blue3;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+}
+::-webkit-scrollbar-thumb:horizontal {
+  width: 7px;
+  background-color: $style-color-blue3;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+}

@@ -11,11 +11,11 @@ export default defineConfig({
   base: '/youradmin',
   server: {
     proxy: {
-      '/jsp1_war': {
+      '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
         ws: true,
-        // rewrite: path => path.replace(/^\/jsp1_war/, '')
+        // rewrite: path => path.replace(/^\/api/, '')
       }
     }
   },

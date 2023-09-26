@@ -1,8 +1,8 @@
 # Vue 3 + Vite (whithout typescript)
-bootstrap
-support svg color
-axios
-router pinia
+bootstrap axios router pinia
+
+**support svg color**
+svg_script.js
 
 ## [Getting started](https://github.com/h1gh-noon/your-admin)
 

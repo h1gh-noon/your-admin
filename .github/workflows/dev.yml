@@ -67,7 +67,7 @@ jobs:
         if: steps.cache-hit.outputs.cache-hit != 'true'
         run: pnpm install
       - name: Build
-        run: pnpm run build
+        run: pnpm run build-test
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

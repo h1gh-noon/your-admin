@@ -1,3 +1,6 @@
+
+## [中文](https://github.com/h1gh-noon/your-admin/blob/dev/cn.md)
+
 # Vue 3 + Vite (whithout typescript)
 bootstrap axios router pinia
 
@@ -36,9 +39,9 @@ pnpm run build-test
 pnpm run build
 ```
 
-## [Online Demo](https://github.com/h1gh-noon/your-admin)
+## [Online Demo](https://h1gh-noon.github.io/your-admin/)
 
-...
+[demo✈️](https://h1gh-noon.github.io/your-admin/)
 
 ## License
 

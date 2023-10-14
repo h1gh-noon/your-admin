@@ -20,9 +20,9 @@ export const staticRouter = [
       {
         path: 'home',
         name: 'home-view',
-        component: () => import('@/views/HomeView.vue'),
+        component: () => import('@/components/HelloWorld.vue'),
         meta: {
-          title: '首页',
+          title: 'hello',
           keepAlive: true,
           icon: 'db'
         }
@@ -30,9 +30,9 @@ export const staticRouter = [
       {
         path: 'hello',
         name: 'hello-world',
-        component: () => import('@/components/HelloWorld.vue'),
+        component: () => import('@/views/HomeView.vue'),
         meta: {
-          title: 'hello页',
+          title: '首页',
           icon: 'db'
         }
       }
@@ -66,7 +66,7 @@ export const staticRouter = [
         name: 'thello',
         component: () => import('@/components/HelloWorld.vue'),
         meta: {
-          title: '首页',
+          title: 'hello',
           keepAlive: true
           // icon: 'server'
         }
@@ -77,6 +77,7 @@ export const staticRouter = [
     path: LOGIN_URL,
     name: 'login',
     component: () => import('@/components/LoginPage.vue'),
+    hidden: true,
     meta: {
       title: '登录',
       icon: 'server'

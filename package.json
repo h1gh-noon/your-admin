@@ -28,8 +28,10 @@
     "npm-run-all2": "^6.0.6",
     "prettier": "^3.0.3",
     "sass": "^1.67.0",
+    "terser": "^5.21.0",
     "unplugin-vue-components": "^0.25.2",
     "vite": "^4.4.9",
+    "vite-plugin-compression": "^0.5.1",
     "vite-plugin-svg-icons": "^2.0.1"
   }
 }

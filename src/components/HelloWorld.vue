@@ -13,6 +13,8 @@ const count = ref(0)
 
 <template>
   <div>
+    <h1>cached components</h1>
+    <h1>缓存组件</h1>
     <BButton variant="primary" @click="visible = !visible">Click me</BButton>
     <BCollapse v-model="visible">
       ssssss

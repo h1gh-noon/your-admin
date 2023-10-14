@@ -2,9 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { staticRouter, errorRouter } from './modules/staticRouter'
 import NProgress from '@/common/nprogress'
-
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory(),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [...staticRouter, ...errorRouter],
   scrollBehavior: () => ({ left: 0, top: 0 })
 })
@@ -12,6 +12,7 @@ const whiteList = ['/login', '/redirect']
 router.beforeEach(async (to, from, next) => {
   NProgress.start()
 
+  console.log('r')
   document.title = to.meta?.title ?? ''
 
   const authStore = useAuthStore()

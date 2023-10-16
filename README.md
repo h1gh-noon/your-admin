@@ -1,13 +1,17 @@
 
-## [中文](https://github.com/h1gh-noon/your-admin/blob/dev/cn.md)
+### [中文详情](https://github.com/h1gh-noon/your-admin/blob/dev/CN.md)
 
 # Vue 3 + Vite (whithout typescript)
-bootstrap axios router pinia
+[bootstrap-vue-next](https://bootstrap-vue-next.github.io/bootstrap-vue-next/) axios router pinia
 
 **support svg color**
 svg_script.js
 
-## [Getting started](https://github.com/h1gh-noon/your-admin)
+## [Online Demo](https://h1gh-noon.github.io/your-admin/)
+
+[demo✈️](https://h1gh-noon.github.io/your-admin/)
+
+## Getting started
 
 ```shell
 # clone the project
@@ -38,10 +42,6 @@ pnpm run build-test
 # build for production environment
 pnpm run build
 ```
-
-## [Online Demo](https://h1gh-noon.github.io/your-admin/)
-
-[demo✈️](https://h1gh-noon.github.io/your-admin/)
 
 ## License
 

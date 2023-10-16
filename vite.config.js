@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
       Components({
         resolvers: [BootstrapVueNextResolver()]
       }),
-      createSvgIconsPlugin({
+      createSvgIconsPlugin({ // svg插件 自动加载此目录下的svg
         iconDirs: [path.resolve(process.cwd(), './src/assets/icons')],
         symbolId: 'icon-[dir]-[name]'
       }),

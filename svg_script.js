@@ -4,9 +4,9 @@
  *  svg是可以通过css的color属性来指定颜色的，但是有些svg中含有`fill`属性导致颜色不生效
  *
  * 使用:
- *  首次使用须在根目录下创建temp_icons文件夹并添加svg文件(未加入git管理)
- *  node svg_script.js
- *  生成的svg文件在temp_icons/res_icons中
+ *  1.首次使用须在根目录下创建temp_icons文件夹并添加svg文件(未加入git管理)
+ *  2.执行 node svg_script.js
+ *  3.生成的svg文件在temp_icons/res_icons中,复制到src/assets/icons/目录中,即可自动加载
  */
 
 import * as fs from 'fs'

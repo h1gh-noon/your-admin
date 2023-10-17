@@ -7,7 +7,7 @@
       ssssss
     </BCollapse>
 
-    <BButton variant="link">Link</BButton>
+    <BButton variant="link" @click="consoleLog">console.log</BButton>
     <BButton variant="primary" @click="sendRequest">send request</BButton>
   </main>
 </template>
@@ -19,5 +19,8 @@ const show = ref(false)
 const visible = ref(false)
 const sendRequest = () => {
   testApi('testUrl')
+}
+const consoleLog = () => {
+  console.log('consoleLog')
 }
 </script>

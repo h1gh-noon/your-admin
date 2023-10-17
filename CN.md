@@ -50,6 +50,8 @@ VITE_BASE_URL 打包之后的url前缀 （与nginx配置对应）
 
 VITE_BASE_API 请求接口的url前缀
 
+VITE_CLOSE_DEV=true 关闭调试，会去除console、debugger、sourcemap源码，默认不写VITE_CLOSE_DEV为false（**不能VITE_CLOSE_DEV=false**因为.env配置的是字符串类型"false"）
+
 **加载的环境变量也会通过 `import.meta.env` 以字符串形式暴露给客户端源码。为了防止意外地将一些环境变量泄漏到客户端，只有以 `VITE_` 为前缀的变量才会暴露给经过 vite 处理的代码。**[详见vite文档✈](https://cn.vitejs.dev/guide/env-and-mode.html#env-files)
 
 ## nginx配置
@@ -73,6 +75,14 @@ location ^~/youradmin/ { # youradmin替换成与环境变量VITE_BASE_URL对应�
     try_files $uri $uri/ /youradmin/index.html; # youradmin替换成与环境变量VITE_BASE_URL对应的路径
 }
 ```
+## 详细信息
+### 目录
+[查看目录详情✈](https://github.com/h1gh-noon/your-admin/blob/dev/ProjectTree.md)
+### 打包说明
+
+### git分支
+- master 稳定分支（暂时还没有，目前处于开发状态）
+- dev 开发分支
 
 
 ## License

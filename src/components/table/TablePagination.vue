@@ -3,20 +3,19 @@
     <span class="table-total-text">
       共{{ props.total }} 条
     </span>
-    <div class="d-flex mt-3 overflow-auto table-bPagination-box">
-      <BPagination class="table-bPagination justify-content-end" v-model="currentPage" :total-rows="props.total"
+    <div class="d-flex overflow-auto table-bPagination-box">
+      <BPagination class="table-bPagination mt-3 justify-content-end" v-model="currentPage" :total-rows="props.total"
         :per-page="props.pageSize" pills first-number last-number />
     </div>
-    <div>
-      <BDropdown dropup :text="props.pageSize" variant="primary" class="me-2 pagination-pageSize">
-        <BDropdownItemButton v-for="item in pageSizeArr" :key="item" :active="props.pageSize === item"
+    <div class="pagination-pageSize">
+      每页
+      <BDropdown dropup :text="props.pageSize" variant="primary" size="sm">
+        <BDropdownItemButton class="" v-for="item in pageSizeArr" :key="item" :active="props.pageSize === item"
           @click="setPageSize(item)">
           {{ item }}
         </BDropdownItemButton>
       </BDropdown>
-      <span>
-        条每页
-      </span>
+      条
     </div>
   </div>
 </template>
@@ -65,17 +64,23 @@ const setPageSize = (val) => {
   .table-bPagination-box {
     width: 100%;
   }
+
   .table-bPagination {
     width: 100%;
     min-width: 420px;
   }
 }
 
+.table-bPagination {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .table-total-text {
-  margin-right: 25px;
+  margin-right: 10px;
 }
 
 .pagination-pageSize {
-  margin: 0 25px;
+  margin: 0 10px;
 }
 </style>

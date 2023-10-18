@@ -24,7 +24,7 @@ export const staticRouter = [
         meta: {
           title: 'hello',
           keepAlive: true,
-          icon: 'db'
+          // icon: 'db'
         }
       },
       {
@@ -33,7 +33,16 @@ export const staticRouter = [
         component: () => import('@/views/HomeView.vue'),
         meta: {
           title: '首页',
-          icon: 'db'
+          // icon: 'db'
+        }
+      },
+      {
+        path: 'table',
+        name: 'table-demo',
+        component: () => import('@/views/TableDemo.vue'),
+        meta: {
+          title: '表格',
+          // icon: 'db'
         }
       }
     ]

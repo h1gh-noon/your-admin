@@ -104,7 +104,6 @@ onMounted(() => {
   margin: 5px 0;
   border-inline-end: 1px solid rgba(5, 5, 5, 0.06);
 
-
 }
 
 .show-menu-icon {
@@ -115,23 +114,21 @@ onMounted(() => {
   color: $style-color-blue1;
   font-size: 30px;
   cursor: pointer;
-  transition: transform 1s ease-in-out, left 0.5s ease-in-out;
+  transition: left 0.5s ease, opacity 0.5s ease;
 
   background-color: $style-bg-color;
   border-radius: 50%;
 }
 
-.show-menu-icon:hover {
-  transform: rotate(720deg);
-}
-
 .show-menu-icon-closed {
-  left: 10px;
+  left: -18px;
+  opacity: 0.6;
 }
 
 .layout-main {
   flex: 1;
   height: 100vh;
+  overflow: auto;
 }
 
 /* fade-transform transition*/
@@ -155,17 +152,17 @@ onMounted(() => {
 /* show-menu-transform transition*/
 .show-menu-transform-leave-active,
 .show-menu-transform-enter-active {
-  transition: all 0.5s ease-in-out;
+  transition: all 0.6s ease;
 }
 
 .show-menu-transform-enter-from {
   width: 0;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.6s ease;
 }
 
 .show-menu-transform-leave-to {
   width: 0;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.6s ease;
 }
 
 

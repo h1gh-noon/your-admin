@@ -78,7 +78,6 @@ location ^~/youradmin/ { # youradmin替换成与环境变量VITE_BASE_URL对应�
 ## 详细信息
 ### 目录
 [查看目录详情✈](https://github.com/h1gh-noon/your-admin/blob/dev/ProjectTree.md)
-### 打包说明
 
 ### git分支
 - master 稳定分支（暂时还没有，目前处于开发状态）

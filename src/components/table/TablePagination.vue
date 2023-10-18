@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup name="table-pagination">
-import { defineProps, computed } from "vue";
+import { computed } from "vue";
 const pageSizeArr = [20, 30, 50, 100, 500]
 const props = defineProps({
   total: {
@@ -66,6 +66,7 @@ const setPageSize = (val) => {
     width: 100%;
   }
   .table-bPagination {
+    width: 100%;
     min-width: 420px;
   }
 }

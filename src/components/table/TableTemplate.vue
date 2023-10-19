@@ -4,52 +4,44 @@
     <BThead variant="primary">
       <BTr>
         <slot v-if="slotThead" name="thead" />
-        <TableHeadSort v-else-if="tableList && tableList.thead" :thead="tableList.thead" />
+        <TableHeadSort v-else-if="tableThead" :tableThead="tableThead" @sortChange="sortChange" />
       </BTr>
     </BThead>
     <BTbody>
-      <slot v-if="slotDefault" />
-      <BTr v-else-if="tableList && tableList.thead && tableList.tbody" v-for="(item, index) in tableList.tbody" :variant="index % 2 === 0 ? 'info' : ''">
-        <BTd>80</BTd>
-        <BTd>12</BTd>
-        <BTd>19</BTd>
-      </BTr>
+      <slot />
     </BTbody>
   </BTableSimple>
 </template>
 <script setup name="table-template">
-import { reactive, ref, useSlots } from "vue";
+import { useSlots } from "vue";
 import TableHeadSort from "./TableHeadSort.vue";
 
-/** props
+/** 
+ * thead可选插槽注入
+ * tbody须以插槽形式注入
  * 
- * 无插槽模式
- * thead中 指定sort字段来展示排序按钮 desc降序/asc升序
- * @param Object tableList: {
- *    @param Array thead: [
- *          { key: 'username', label: '姓名' }
- *          { key: 'age', label: '年龄', sort: 'desc' }
- *    ],
- *    @param Array (必须指定thead) tbody: [
- *          { username: '张三', age: 20 }
- *    ]
- * }
+ * props
+ * thead中 指定$sort字段来展示排序按钮 sort_down降序/sort_up升序
+ * @param Array thead: [
+ *       { key: 'username', label: '姓名' },
+ *       { key: 'age', label: '年龄', $sort: 'sort_down' }
+ * ]
  * 
  */
 
 const props = defineProps({
-  tableList: {
-    type: Object,
-    default: () => null
+  tableThead: {
+    type: Array,
+    default: null
   }
 })
+const emit = defineEmits(['sortChange'])
 
 const slotThead = !!useSlots().thead
-const slotDefault = !!useSlots().default
 
-
-
-const tableLoading = ref(true)
+const sortChange = (e) => {
+  emit('sortChange', e)
+}
 
 
 </script>

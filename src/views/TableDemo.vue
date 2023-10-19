@@ -1,6 +1,12 @@
 <template>
   <div class="page-content">
-    <TableTemplate />
+    <TableTemplate>
+      <template #thead>
+        <BTh>Clothes</BTh>
+        <BTh>Accessories</BTh>
+        <BTh>Accessories</BTh>
+      </template>
+    </TableTemplate>
     <TablePagination :total="paginationData.total" :current-page="paginationData.currentPage" :page-size="paginationData.pageSize"
       @paginationChange="paginationChange" />
   </div>

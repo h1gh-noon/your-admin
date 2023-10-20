@@ -71,7 +71,7 @@ function readfile(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf8', (err, data) => {
       // 替换所有fill="" 除了fill="white"
-      data = (data + '').replace(/fill="(?!white).*"/g, '')
+      data = (data + '').replace(/fill="(?!white).*?" */g, '')
       if (err) reject(err)
       resolve({ path, data })
     })

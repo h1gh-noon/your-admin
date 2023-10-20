@@ -27,6 +27,9 @@ import TableHeadSort from "./TableHeadSort.vue";
  *       { key: 'age', label: '年龄', $sort: 'sort_down' }
  * ]
  * 
+ * Event
+ * sortChange: 点击排序按钮触发 return：{ key: '', $sort: '' }
+ * 
  */
 
 const props = defineProps({
@@ -47,6 +50,6 @@ const sortChange = (e) => {
 </script>
 <style lang="scss" scoped>
 .table-template-hasPagination {
-  height: calc(100vh - 125px);
+  height: calc(100% - 110px);
 }
 </style>

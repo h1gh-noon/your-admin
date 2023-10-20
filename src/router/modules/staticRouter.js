@@ -18,6 +18,15 @@ export const staticRouter = [
     },
     children: [
       {
+        path: 'table',
+        name: 'table-demo',
+        component: () => import('@/views/TableDemo.vue'),
+        meta: {
+          title: '表格demo',
+          // icon: 'db'
+        }
+      },
+      {
         path: 'home',
         name: 'home-view',
         component: () => import('@/components/HelloWorld.vue'),
@@ -33,15 +42,6 @@ export const staticRouter = [
         component: () => import('@/views/HomeView.vue'),
         meta: {
           title: '首页',
-          // icon: 'db'
-        }
-      },
-      {
-        path: 'table',
-        name: 'table-demo',
-        component: () => import('@/views/TableDemo.vue'),
-        meta: {
-          title: '表格',
           // icon: 'db'
         }
       }

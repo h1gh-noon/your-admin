@@ -41,3 +41,23 @@ a,
   min-height: 100vh;
   min-width: 320px;
 }
+.page-filter-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.page-filter-left {
+  display: flex;
+}
+.page-filter-right {
+  display: flex;
+}
+.page-filter-item {
+  margin: 0 10px;
+}
+.page-filter-item:first-child {
+  margin-left: 0;
+}
+.page-filter-item:last-child {
+  margin-right: 0;
+}

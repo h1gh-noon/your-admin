@@ -1,5 +1,32 @@
 <template>
   <div class="page-content">
+    <div class="page-filter-group">
+      <div class="page-filter-left">
+        <div class="page-filter-item">
+          <BButton pill variant="outline-primary">
+            <div>
+              <SvgIcon iconClass="add" />
+              新增
+            </div>
+          </BButton>
+        </div>
+      </div>
+      <div class="page-filter-right">
+        <div class="page-filter-item">
+          <BInputGroup prepend="姓名">
+            <BFormInput />
+          </BInputGroup>
+        </div>
+        <div class="page-filter-item">
+          <BInputGroup prepend="地址">
+            <BFormInput />
+          </BInputGroup>
+        </div>
+        <div class="page-filter-item">
+          <BButton variant="primary">搜索</BButton>
+        </div>
+      </div>
+    </div>
     <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
       <!-- <template #thead>
         <BTh>Clothes</BTh>
@@ -33,10 +60,14 @@ const paginationData = reactive({
 const tableList = reactive({
   thead: [
     { key: 'username', label: '姓名' },
-    { key: 'age', label: '年龄', $sort: 'sort_down' }
+    { key: 'age', label: '年龄', $sort: 'sort_down' },
+    { key: 'addr', label: '地址' }
   ],
   tbody: [
-    { id: 1, username: '张三', age: 20 }
+    { id: 1, username: '张三', age: 20, addr: '成华区二仙桥' },
+    { id: 2, username: '张三', age: 20, addr: '成华区二仙桥' },
+    { id: 3, username: '张三', age: 20, addr: '成华区二仙桥' },
+    { id: 4, username: '张三', age: 20, addr: '成华区二仙桥' }
   ]
 })
 
@@ -57,3 +88,9 @@ const sortChange = (e) => {
   })
 }
 </script>
+
+<style lang="scss" scoped>
+.page-content {
+  height: 100%;
+}
+</style>

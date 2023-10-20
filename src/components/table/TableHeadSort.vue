@@ -6,14 +6,18 @@
   </BTh>
 </template>
 <script setup name="table-head-sort">
-/** props
+/** 
  * 
+ * props
  * tableThead中 指定$sort字段来展示排序按钮 sort_down降序/sort_up升序
  * @param Array tableThead: [
  *     { key: 'username', label: '姓名' }
  *     { key: 'age', label: '年龄', $sort: 'sort_down' }
  * ]
  * $sort: true可排序字段(处于不参与排序状态) sort_down降序/sort_up升序
+ * 
+ * Event
+ * sortChange: 点击排序按钮触发 return：{ key: '', $sort: '' }
  * 
  */
 

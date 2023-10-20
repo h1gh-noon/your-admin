@@ -44,16 +44,20 @@ a,
 .page-filter-group {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 18px;
+  flex-wrap: wrap;
 }
 .page-filter-left {
   display: flex;
+  flex-wrap: wrap;
 }
 .page-filter-right {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 .page-filter-item {
-  margin: 0 10px;
+  margin-right: 10px;
+  margin-bottom: 18px;
 }
 .page-filter-item:first-child {
   margin-left: 0;

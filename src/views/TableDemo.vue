@@ -10,6 +10,22 @@
             </div>
           </BButton>
         </div>
+        <div class="page-filter-item">
+          <BButton pill variant="outline-primary">
+            <div>
+              <SvgIcon iconClass="add" />
+              批量删除
+            </div>
+          </BButton>
+        </div>
+        <div class="page-filter-item">
+          <BButton pill variant="outline-primary">
+            <div>
+              <SvgIcon iconClass="add" />
+              导出
+            </div>
+          </BButton>
+        </div>
       </div>
       <div class="page-filter-right">
         <div class="page-filter-item">
@@ -64,12 +80,15 @@ const tableList = reactive({
     { key: 'addr', label: '地址' }
   ],
   tbody: [
-    { id: 1, username: '张三', age: 20, addr: '成华区二仙桥' },
-    { id: 2, username: '张三', age: 20, addr: '成华区二仙桥' },
-    { id: 3, username: '张三', age: 20, addr: '成华区二仙桥' },
-    { id: 4, username: '张三', age: 20, addr: '成华区二仙桥' }
+    { id: 1, username: '李四', age: 18, addr: '成华区二仙桥' },
   ]
 })
+// 模拟数据
+for (let index = 3; index < 100; index++) {
+  tableList.tbody.push(
+    { id: index, username: '张三', age: 20, addr: '成华区二仙桥' }
+  )
+}
 
 const paginationChange = (currentPage, pageSize) => {
   paginationData.currentPage = currentPage ?? paginationData.currentPage

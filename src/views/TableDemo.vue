@@ -51,7 +51,13 @@
       </template> -->
       <template v-if="tableList.tbody.length">
         <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
-          <BTd v-for="theadItem in tableList.thead" :key="`${item.id}-${theadItem.key}`">{{ item[theadItem.key] }}</BTd>
+          <BTd>{{ item.username }}</BTd>
+          <BTd>{{ item.age }}</BTd>
+          <BTd>{{ item.addr }}</BTd>
+          <BTd style="width: 135px;">
+            <BButton variant="primary" class="me-md-2">编辑</BButton>
+            <BButton variant="danger">删除</BButton>
+          </BTd>
         </BTr>
       </template>
       <BTd v-else :colspan="tableList.thead && tableList.thead.length || 0">
@@ -77,7 +83,8 @@ const tableList = reactive({
   thead: [
     { key: 'username', label: '姓名' },
     { key: 'age', label: '年龄', $sort: 'sort_down' },
-    { key: 'addr', label: '地址' }
+    { key: 'addr', label: '地址' },
+    { key: 'option', label: '操作' }
   ],
   tbody: [
     { id: 1, username: '李四', age: 18, addr: '成华区二仙桥' },
@@ -112,4 +119,5 @@ const sortChange = (e) => {
 .page-content {
   height: 100%;
 }
+
 </style>

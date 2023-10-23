@@ -22,7 +22,7 @@ export const staticRouter = [
         name: 'home-view',
         component: () => import('@/views/HomeView.vue'),
         meta: {
-          title: '首页',
+          title: '首页'
           // icon: 'db'
         }
       },
@@ -32,7 +32,7 @@ export const staticRouter = [
         component: () => import('@/components/HelloWorld.vue'),
         meta: {
           title: '缓存组件',
-          keepAlive: true,
+          keepAlive: true
           // icon: 'db'
         }
       }
@@ -52,7 +52,7 @@ export const staticRouter = [
         name: 'table-demo',
         component: () => import('@/views/TableDemo.vue'),
         meta: {
-          title: '表格demo',
+          title: '表格demo'
           // icon: 'db'
         }
       }
@@ -75,6 +75,9 @@ export const staticRouter = [
             ...res.default,
             name: 'TestHomeView'
           })),
+        props: {
+          echartsId: 'echarts-2'
+        },
         meta: {
           title: '首页(缓存页面)',
           keepAlive: true

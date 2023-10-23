@@ -1,16 +1,17 @@
 <template>
   <main>
-    <BButton variant="primary" @click="show = !show">Click me</BButton>
-    <BModal v-model="show">Test</BModal>
     <BButton variant="primary" @click="visible = !visible">Click me</BButton>
     <BCollapse v-model="visible">
       ssssss
     </BCollapse>
-
+    <BButton variant="primary" @click="show = !show">Click me</BButton>
+    <BModal v-model="show">Test</BModal>
     <BButton variant="link" @click="consoleLog">console.log</BButton>
     <BButton variant="primary" @click="sendRequest">send request</BButton>
 
-    <div id="echarts-1"></div>
+    <!-- 准备两个id的dom -->
+    <div id="echarts-1" v-if="echartsId === 'echarts-1'"></div>
+    <div id="echarts-2" v-else></div>
   </main>
 </template>
 <script setup name="home-view">
@@ -44,7 +45,17 @@ echarts.use([
   LabelLayout,
   UniversalTransition,
   CanvasRenderer
-]);
+])
+
+// demo片段(正常这么玩的很少...)
+// 通过路由表props配置echartsId 因为echarts有缓存每个id只能初始化一次
+// 为了实现可复用,可缓存的页面demo 所以要准备两个id的dom
+const props = defineProps({
+  echartsId: {
+    type: String,
+    default: 'echarts-1'
+  }
+})
 
 const show = ref(false)
 const visible = ref(false)
@@ -55,7 +66,7 @@ const consoleLog = () => {
   console.log('consoleLog')
 }
 onMounted(() => {
-  const myChart = echarts.init(document.getElementById('echarts-1'))
+  const myChart = echarts.init(document.getElementById(props.echartsId))
   const option = {
     xAxis: {
       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -78,7 +89,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-#echarts-1 {
+#echarts-1,
+#echarts-2 {
   width: 600px;
   height: 450px;
 }

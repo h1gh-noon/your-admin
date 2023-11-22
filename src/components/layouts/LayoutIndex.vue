@@ -88,13 +88,13 @@ const resetMenu = (innerWidth) => {
 }
 
 const logoutHandler = () => {
-  logoutApi().then(res => {
-    if (res.success) {
+  // logoutApi().then(res => {
+  //   if (res.success) {
       authStore.removeToken()
       successToast()
       router.replace('/login')
-    }
-  })
+  //   }
+  // })
 }
 
 onMounted(() => {

@@ -1,11 +1,23 @@
 <template>
   <div class="layout">
+
     <SvgIcon iconClass="compass" class="show-menu-icon" :class="{ 'show-menu-icon-closed': !showMenuList }"
       @click="showMenuList = !showMenuList" />
     <Transition appear name="show-menu-transform">
       <div class="layout-left" v-show="showMenuList">
         <div class="left-menu">
-          <div class="left-bar"></div>
+          <div class="left-bar">
+            <div class="user-info">
+              <img class="avatar-img" src="" alt="" :onError="e => e.target.src = errorImg">
+              <div>
+                {{ userInfoComputed.username }}
+              </div>
+              <BButton pill size="sm" variant="outline-primary" @click="logoutHandler">
+                <SvgIcon iconClass="logout" />
+                退出登录
+              </BButton>
+            </div>
+          </div>
           <MenuTree />
         </div>
       </div>
@@ -41,12 +53,17 @@
 import MenuTree from "./components/MenuTree.vue";
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import router from "@/router";
 import { debounce } from "@/utils";
+import errorImg from "@/assets/avatar_1.jpg";
+import { useAuthStore } from "@/stores/auth";
+import { logoutApi } from "@/api/baseApi";
 
-// import { useAuthStore } from "@/stores/auth";
-// const authStore = useAuthStore()
+const authStore = useAuthStore()
+
 // const keepAliveArr = authStore.cacheRoutesComputed
 
+const userInfoComputed = authStore.userInfoComputed
 const showMenuList = ref(true)
 
 // window 的宽度
@@ -68,6 +85,16 @@ const resetMenu = (innerWidth) => {
     showMenuList.value = true
   }
 }
+
+const logoutHandler = () => {
+  logoutApi().then(res => {
+    if (res.success) {
+      authStore.removeToken()
+      router.replace('/login')
+    }
+  })
+}
+
 onMounted(() => {
   // 初始化
   resetMenu(window.innerWidth)
@@ -88,6 +115,21 @@ onMounted(() => {
   overflow: hidden;
 }
 
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 10px 0;
+
+  .avatar-img {
+    width: 25%;
+    border-radius: 50%;
+    transform: rotateY(180deg);
+  }
+}
+
 .layout-left {
   height: 100vh;
   width: 230px;
@@ -95,7 +137,7 @@ onMounted(() => {
 }
 
 .left-bar {
-  height: 10vh;
+  min-height: 10vh;
 }
 
 .left-menu {

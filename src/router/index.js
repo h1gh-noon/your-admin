@@ -12,7 +12,7 @@ const whiteList = ['/login', '/redirect']
 router.beforeEach(async (to, from, next) => {
   NProgress.start()
 
-  console.log('r')
+  console.log('router', to.path)
   document.title = to.meta?.title ?? ''
 
   const authStore = useAuthStore()
@@ -21,20 +21,17 @@ router.beforeEach(async (to, from, next) => {
       // 已登录
       next({ path: '/' })
     } else {
-      const hasRoles = authStore.userRolesComputed?.length
-      if (hasRoles) {
+      if (authStore.userInfoComputed) {
         next()
       } else {
         try {
-          // const { roles } =
           await authStore.getAuthInfo()
-
           const accessRoutes = authStore.accessRoutesComputed
+          // 添加动态路由
           accessRoutes.forEach(item => {
             router.addRoute(item)
-          });
-
-          next({ ...to, replace: true })
+          })
+          next()
         } catch (e) {
           authStore.removeToken()
           next(`/login?redirect=${to.path}`)

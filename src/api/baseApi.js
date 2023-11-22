@@ -7,3 +7,25 @@ export const testApi = data => {
     data
   })
 }
+
+export const userInfoApi = () => {
+  return request({
+    method: 'post',
+    url: '/user/auth/userInfo',
+  })
+}
+
+export const loginApi = data => {
+  return request({
+    method: 'post',
+    url: '/user/auth/userLogin',
+    data
+  })
+}
+
+export const logoutApi = () => {
+  return request({
+    method: 'post',
+    url: '/user/auth/loginOut'
+  })
+}

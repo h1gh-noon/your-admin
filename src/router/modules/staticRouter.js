@@ -31,7 +31,7 @@ export const staticRouter = [
         name: 'hello-world',
         component: () => import('@/components/HelloWorld.vue'),
         meta: {
-          title: '缓存组件',
+          title: '缓存页面',
           keepAlive: true
           // icon: 'db'
         }
@@ -89,7 +89,7 @@ export const staticRouter = [
         name: 'thello',
         component: () => import('@/components/HelloWorld.vue'),
         meta: {
-          title: '缓存组件',
+          title: '缓存页面',
           keepAlive: true
           // icon: 'server'
         }

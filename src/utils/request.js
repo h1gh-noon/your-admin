@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
+import { errorToast } from '@/components/Toast'
 
 // create an axios instance
 const request = axios.create({
@@ -24,9 +25,8 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   response => {
     const res = response.data
-    if (res.code && [401, 402, 403].includes(res.code)) {
-      // localStorage.removeItem('userInfo')
-      // router.replace('login')
+    if (res.code && [401, 402, 403, 404].includes(res.code)) {
+      errorToast(res.msg)
       return Promise.reject(new Error(res.msg || 'Error'))
     }
     return Promise.resolve(res)

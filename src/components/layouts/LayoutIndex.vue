@@ -58,6 +58,7 @@ import { debounce } from "@/utils";
 import errorImg from "@/assets/avatar_1.jpg";
 import { useAuthStore } from "@/stores/auth";
 import { logoutApi } from "@/api/baseApi";
+import { successToast } from "@/components/Toast";
 
 const authStore = useAuthStore()
 
@@ -90,6 +91,7 @@ const logoutHandler = () => {
   logoutApi().then(res => {
     if (res.success) {
       authStore.removeToken()
+      successToast()
       router.replace('/login')
     }
   })

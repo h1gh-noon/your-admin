@@ -1,6 +1,7 @@
 <template>
   <!-- <header>
   </header> -->
+  <BToaster />
   <RouterView />
 </template>
 <script setup name="app">

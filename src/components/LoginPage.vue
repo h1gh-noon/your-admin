@@ -50,7 +50,7 @@ import router from "@/router";
 import { useAuthStore } from "@/stores/auth";
 import { ref, computed, reactive } from "vue";
 import md5 from "js-md5";
-
+import { successToast } from "@/components/Toast";
 
 const route = useRoute()
 const redirectPath = route.query.redirect ?? '/'
@@ -78,6 +78,8 @@ const loginHandler = async () => {
       password: md5(data.password).toUpperCase()
     }
     await useAuthStore().loginHandler(d)
+
+    successToast()
     router.replace(redirectPath)
   } catch (error) {
     console.log(error)

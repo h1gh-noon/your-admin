@@ -41,11 +41,11 @@ export const useAuthStore = defineStore('auth', () => {
     // if (res.success) {
     //   state.userInfo = res.data
 
-      // 模拟数据
-      state.userInfo = 'test'
-      state.routeList = [...staticRouter]
-      state.accessRoutes = []
-      state.userRoles = ['admin']
+    // 模拟数据
+    state.userInfo = 'test'
+    state.routeList = [...staticRouter]
+    state.accessRoutes = []
+    state.userRoles = ['admin']
     // }
   }
 
@@ -67,23 +67,25 @@ export const useAuthStore = defineStore('auth', () => {
   const userRolesComputed = computed(() => state.userRoles)
   const accessRoutesComputed = computed(() => state.accessRoutes)
 
-  const loginHandler = data =>
-    loginApi(data)
-      .then(res => {
-        if (res.success) {
-          // ...
-          setToken(res.data.token)
-          state.userInfo = res.data.userInfo
-          // 模拟数据
-          state.routeList = [...staticRouter]
-          state.accessRoutes = []
-          state.userRoles = ['admin']
-        }
-      })
-      .catch(() => {
-        setToken('test')
-        state.userInfo = 'test'
-      })
+  // const loginHandler = data =>
+  //   loginApi(data)
+  //     .then(res => {
+  //       if (res.success) {
+  //         // ...
+  //         setToken(res.data.token)
+  //         state.userInfo = res.data.userInfo
+  //         // 模拟数据
+  //         state.routeList = [...staticRouter]
+  //         state.accessRoutes = []
+  //         state.userRoles = ['admin']
+  //       }
+  //     })
+
+  const loginHandler = () => {
+    // 模拟登录
+    setToken('test')
+    state.userInfo = 'test'
+  }
 
   return {
     tokenComputed,

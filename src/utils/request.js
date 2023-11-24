@@ -25,7 +25,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   response => {
     const res = response.data
-    if (res.code && [401, 402, 403, 404].includes(res.code)) {
+    if (res.code && [401, 402, 403, 404, 500, 503].includes(res.code)) {
       errorToast(res.msg)
       return Promise.reject(new Error(res.msg || 'Error'))
     }

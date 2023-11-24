@@ -81,6 +81,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     tokenComputed,
+    setToken,
     removeToken,
     setRouteList,
     routeListComputed,

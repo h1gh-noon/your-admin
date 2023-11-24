@@ -50,7 +50,7 @@ const route = useRoute()
 const showDropFlag = computed(() => !!itemRoute.value.children)
 
 const currentPath = computed(() => route.fullPath)
-const pathReslove = computed(() => showDropFlag.value ? '' : (basePath.value + "/" + itemRoute.value.path).replace(/\/\//, "/"))
+const pathReslove = computed(() => showDropFlag.value ? '' : (basePath.value + "/" + itemRoute.value.path).replace(/\/\//g, "/").replace(/\/\//g, "/"))
 const isActivedRoute = computed(() => currentPath.value === pathReslove.value)
 watchEffect(() => {
   // 展开父级菜单

@@ -6,7 +6,7 @@ import { errorToast } from '@/components/Toast'
 const request = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 30000 // request timeout
 })
 
 // request interceptor
@@ -25,7 +25,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   response => {
     const res = response.data
-    if (res.code && [401, 402, 403, 404].includes(res.code)) {
+    if (res.code && [401, 402, 403, 404, 500, 503].includes(res.code)) {
       errorToast(res.msg)
       return Promise.reject(new Error(res.msg || 'Error'))
     }

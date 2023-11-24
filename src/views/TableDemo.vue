@@ -43,27 +43,29 @@
         </div>
       </div>
     </div>
-    <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
-      <!-- <template #thead>
+    <div style="height: calc(100vh - 200px);">
+      <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
+        <!-- <template #thead>
         <BTh>Clothes</BTh>
         <BTh>Accessories</BTh>
         <BTh>Accessories</BTh>
       </template> -->
-      <template v-if="tableList.tbody.length">
-        <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
-          <BTd>{{ item.username }}</BTd>
-          <BTd>{{ item.age }}</BTd>
-          <BTd>{{ item.addr }}</BTd>
-          <BTd style="width: 135px;">
-            <BButton variant="primary" class="me-md-2">编辑</BButton>
-            <BButton variant="danger">删除</BButton>
-          </BTd>
-        </BTr>
-      </template>
-      <BTd v-else :colspan="tableList.thead && tableList.thead.length || 0">
-        <div class="text-center">暂无数据...</div>
-      </BTd>
-    </TableTemplate>
+        <template v-if="tableList.tbody.length">
+          <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
+            <BTd>{{ item.username }}</BTd>
+            <BTd>{{ item.age }}</BTd>
+            <BTd>{{ item.addr }}</BTd>
+            <BTd style="width: 135px;">
+              <BButton variant="primary" class="me-md-2">编辑</BButton>
+              <BButton variant="danger">删除</BButton>
+            </BTd>
+          </BTr>
+        </template>
+        <BTd v-else :colspan="tableList.thead && tableList.thead.length || 0">
+          <div class="text-center">暂无数据...</div>
+        </BTd>
+      </TableTemplate>
+    </div>
     <TablePagination :total="paginationData.total" :current-page="paginationData.currentPage"
       :page-size="paginationData.pageSize" @paginationChange="paginationChange" />
   </div>
@@ -119,5 +121,4 @@ const sortChange = (e) => {
 .page-content {
   height: 100%;
 }
-
 </style>

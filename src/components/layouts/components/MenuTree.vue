@@ -14,7 +14,7 @@ import { reactive } from "vue";
 
 const filterRouteHiddenHandler = (arr) => {
   return arr ? arr.reduce((acc, cur) => {
-    if (!cur.hidden && cur.meta) {
+    if (!cur.hidden && cur.name) {
       if (cur.children) {
         const children = filterRouteHiddenHandler(cur.children)
         if (children.length) {
@@ -24,7 +24,13 @@ const filterRouteHiddenHandler = (arr) => {
           delete cur.children
         }
       }
-      acc.push(cur)
+      if (cur.children && cur.children.length === 1) {
+        const routeItem = cur.children[0]
+        routeItem.path = cur.path + "/" + routeItem.path
+        acc.push(routeItem)
+      } else {
+        acc.push(cur)
+      }
     }
     return acc
   }, []) : []

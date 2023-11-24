@@ -1,14 +1,5 @@
 <template>
   <main>
-    <BButton variant="primary" @click="visible = !visible">Click me</BButton>
-    <BCollapse v-model="visible">
-      ssssss
-    </BCollapse>
-    <BButton variant="primary" @click="show = !show">Click me</BButton>
-    <BModal v-model="show">Test</BModal>
-    <BButton variant="link" @click="consoleLog">console.log</BButton>
-    <BButton variant="primary" @click="sendRequest">send request</BButton>
-
     <!-- 准备两个id的dom -->
     <div id="echarts-1" v-if="echartsId === 'echarts-1'"></div>
     <div id="echarts-2" v-else></div>

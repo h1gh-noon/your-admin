@@ -12,28 +12,18 @@ export const staticRouter = [
     path: '/',
     name: 'root',
     component: Layout,
-    meta: {
-      title: '主页',
-      icon: 'server'
-    },
+    // meta: {
+    //   title: '主页',
+    //   icon: 'server'
+    // },
     children: [
       {
         path: 'home',
         name: 'home-view',
         component: () => import('@/views/HomeView.vue'),
         meta: {
-          title: '首页'
-          // icon: 'db'
-        }
-      },
-      {
-        path: 'hello',
-        name: 'hello-world',
-        component: () => import('@/components/HelloWorld.vue'),
-        meta: {
-          title: '缓存页面',
-          keepAlive: true
-          // icon: 'db'
+          title: '首页',
+          icon: 'server'
         }
       }
     ]
@@ -42,18 +32,14 @@ export const staticRouter = [
     path: '/table',
     name: 'table',
     component: Layout,
-    meta: {
-      title: '表格组件',
-      icon: 'server'
-    },
     children: [
       {
         path: 'tabledemo',
         name: 'table-demo',
         component: () => import('@/views/TableDemo.vue'),
         meta: {
-          title: '表格demo'
-          // icon: 'db'
+          title: '表格demo',
+          icon: 'db'
         }
       }
     ]

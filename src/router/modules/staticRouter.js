@@ -29,16 +29,16 @@ export const staticRouter = [
     ]
   },
   {
-    path: '/table',
-    name: 'table',
+    path: '/user',
+    name: 'user',
     component: Layout,
     children: [
       {
-        path: 'tabledemo',
-        name: 'table-demo',
-        component: () => import('@/views/TableDemo.vue'),
+        path: 'userTable',
+        name: 'user-table',
+        component: () => import('@/views/user/UserTable.vue'),
         meta: {
-          title: '表格demo',
+          title: '用户列表',
           icon: 'db'
         }
       }

@@ -50,6 +50,10 @@ const sortChange = (e) => {
 </script>
 <style lang="scss" scoped>
 .table-template-hasPagination {
-  height: calc(100% - 120px);
+  max-height: calc(100% - 120px);
+}
+
+.table-template {
+  white-space: nowrap;
 }
 </style>

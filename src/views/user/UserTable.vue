@@ -18,43 +18,44 @@
             </div>
           </BButton>
         </div>
-        <div class="page-filter-item">
-          <BButton pill variant="outline-primary">
-            <div>
-              <SvgIcon iconClass="add" />
-              导出
-            </div>
-          </BButton>
-        </div>
       </div>
       <div class="page-filter-right">
         <div class="page-filter-item">
           <BInputGroup prepend="姓名">
-            <BFormInput />
+            <BFormInput v-model="searchField.username" />
           </BInputGroup>
         </div>
         <div class="page-filter-item">
-          <BInputGroup prepend="地址">
-            <BFormInput />
+          <BInputGroup prepend="昵称">
+            <BFormInput v-model="searchField.nickname" />
           </BInputGroup>
         </div>
         <div class="page-filter-item">
-          <BButton variant="primary">搜索</BButton>
+          <BInputGroup prepend="手机号">
+            <BFormInput v-model="searchField.phone" />
+          </BInputGroup>
+        </div>
+        <div class="page-filter-item">
+          <BButton variant="primary" @click="searchHandler">搜索</BButton>
         </div>
       </div>
     </div>
     <div style="height: calc(100vh - 200px);">
       <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
-        <!-- <template #thead>
-        <BTh>Clothes</BTh>
-        <BTh>Accessories</BTh>
-        <BTh>Accessories</BTh>
-      </template> -->
         <template v-if="tableList.tbody.length">
           <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
-            <BTd>{{ item.username }}</BTd>
-            <BTd>{{ item.age }}</BTd>
-            <BTd>{{ item.addr }}</BTd>
+            <BTd stickyColumn variant="light">{{ item.username }}</BTd>
+            <BTd>{{ item.nickname }}</BTd>
+            <BTd>
+              <BPopover v-if="item.headimgurl" :content="item.headimgurl">
+                <BImg thumbnail fluid :src="item.headimgurl" alt="" />
+              </BPopover>
+              <span :style="{ cursor: item.headimgurl ? 'pointer' : '' }"> {{ item.headimgurl ? '查看' : '-' }} </span>
+            </BTd>
+            <BTd>{{ item.phone }}</BTd>
+            <BTd>{{ item.permissions }}</BTd>
+            <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
+            <BTd>{{ item.createTime }}</BTd>
             <BTd style="width: 135px;">
               <BButton variant="primary" class="me-md-2">编辑</BButton>
               <BButton variant="danger">删除</BButton>
@@ -66,42 +67,46 @@
         </BTd>
       </TableTemplate>
     </div>
+
     <TablePagination :total="paginationData.total" :current-page="paginationData.currentPage"
       :page-size="paginationData.pageSize" @paginationChange="paginationChange" />
   </div>
 </template>
-<script setup name="table-demo">
+<script setup name="user-table">
 import TablePagination from "@/components/table/TablePagination.vue"
 import TableTemplate from "@/components/table/TableTemplate.vue";
 import { reactive } from "vue";
+import { getUserPageList } from "@/api/user";
 
 
+const searchField = reactive({
+  'username': '',
+  'nickname': '',
+  'phone': ''
+})
 const paginationData = reactive({
   currentPage: 1,
   pageSize: 20,
-  total: 500
+  total: 0
 })
 const tableList = reactive({
   thead: [
-    { key: 'username', label: '姓名' },
-    { key: 'age', label: '年龄', $sort: 'sort_down' },
-    { key: 'addr', label: '地址' },
+    { key: 'username', label: '用户名', stickyColumn: true },
+    { key: 'nickname', label: '昵称' },
+    { key: 'headimgurl', label: '微信头像' },
+    { key: 'phone', label: '手机号' },
+    { key: 'permissions', label: '权限' },
+    { key: 'status', label: '用户状态' },
+    { key: 'createTime', label: '用户创建时间', $sort: true },
     { key: 'option', label: '操作' }
   ],
-  tbody: [
-    { id: 1, username: '李四', age: 18, addr: '成华区二仙桥' },
-  ]
+  tbody: []
 })
-// 模拟数据
-for (let index = 3; index < 100; index++) {
-  tableList.tbody.push(
-    { id: index, username: '张三', age: 20, addr: '成华区二仙桥' }
-  )
-}
 
 const paginationChange = (currentPage, pageSize) => {
   paginationData.currentPage = currentPage ?? paginationData.currentPage
   paginationData.pageSize = pageSize ?? paginationData.pageSize
+  getUserPageListHander()
 }
 
 const sortChange = (e) => {
@@ -114,6 +119,32 @@ const sortChange = (e) => {
       }
     }
   })
+
+  getUserPageListHander(typeof (e.$sort) === 'string' ? e.key + '-' + e.$sort : null)
+}
+
+const getUserPageListHander = (sort) => {
+  const params = {
+    currentPage: paginationData.currentPage,
+    pageSize: paginationData.pageSize
+  }
+  // sortData.$slots为true时 为默认排序不传给后台
+  if (sort) {
+    params.sort = sort
+  }
+  const data = searchField
+  getUserPageList(params, data).then(res => {
+    if (res.success) {
+      paginationData.total = res.data.total
+      tableList.tbody = res.data.data
+    }
+  })
+}
+getUserPageListHander()
+
+const searchHandler = () => {
+  paginationData.currentPage = 1
+  getUserPageListHander()
 }
 </script>
 

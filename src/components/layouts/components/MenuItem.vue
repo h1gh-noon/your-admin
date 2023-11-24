@@ -16,16 +16,16 @@
   <template v-else>
     <RouterLink :to="pathReslove" class="menu-link">
       <div class="menu-title" :class="{ 'menu-title-actived': isActivedRoute }">
-        <SvgIcon :iconClass="itemRoute?.meta?.icon" />
-        <div class="menu-title-text" :title="itemRoute.meta?.title ?? ''">
-          {{ itemRoute.meta?.title ?? '' }}
+        <SvgIcon :iconClass="showItem?.meta?.icon" />
+        <div class="menu-title-text" :title="showItem.meta?.title ?? ''">
+          {{ showItem.meta?.title ?? '' }}
         </div>
       </div>
     </RouterLink>
   </template>
 </template>
 <script setup name="menu-item">
-import { computed, onMounted, toRefs, watchEffect } from "vue";
+import { computed, toRefs, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 
 const props = defineProps({
@@ -46,11 +46,26 @@ const { itemRoute, basePath } = toRefs(props)
 const emit = defineEmits(['showMenuGroup'])
 const route = useRoute()
 
-// 有children并且不止一个hidden为false的
-const showDropFlag = computed(() => !!itemRoute.value.children)
+// 有children并且不止一个(hidden为false的)
+const showDropFlag = computed(() => !!itemRoute.value.children && itemRoute.value.children.length !== 1)
+// 仅有一个children 直接展示
+const onlyOneChildFlag = computed(() => !!itemRoute.value.children && itemRoute.value.children.length === 1)
 
 const currentPath = computed(() => route.fullPath)
-const pathReslove = computed(() => showDropFlag.value ? '' : (basePath.value + "/" + itemRoute.value.path).replace(/\/\//g, "/").replace(/\/\//g, "/"))
+// 处理路径
+const pathReslove = computed(
+  () => {
+    const path = onlyOneChildFlag.value
+      ? (basePath.value + '/' + itemRoute.value.path + '/' + itemRoute.value.children?.[0].path)
+      : (basePath.value + '/' + itemRoute.value.path)
+
+    return path.replace(/\/\//g, '/').replace(/\/\//g, '/')
+  }
+)
+// 展示的数据
+const showItem = computed(() => onlyOneChildFlag.value ? itemRoute.value.children[0] : itemRoute.value)
+
+// 是否为当前路由(高亮)
 const isActivedRoute = computed(() => currentPath.value === pathReslove.value)
 watchEffect(() => {
   // 展开父级菜单

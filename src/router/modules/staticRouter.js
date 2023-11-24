@@ -52,8 +52,8 @@ export const staticRouter = [
         name: 'table-demo',
         component: () => import('@/views/TableDemo.vue'),
         meta: {
-          title: '表格demo'
-          // icon: 'db'
+          title: '表格demo',
+          icon: 'db'
         }
       }
     ]

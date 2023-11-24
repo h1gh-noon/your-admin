@@ -24,13 +24,7 @@ const filterRouteHiddenHandler = (arr) => {
           delete cur.children
         }
       }
-      if (cur.children && cur.children.length === 1) {
-        const routeItem = cur.children[0]
-        routeItem.path = cur.path + "/" + routeItem.path
-        acc.push(routeItem)
-      } else {
-        acc.push(cur)
-      }
+      acc.push(cur)
     }
     return acc
   }, []) : []

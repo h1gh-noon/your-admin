@@ -20,9 +20,6 @@
       </BRow>
       <BRow>
         <BCol class="text-center">
-          <BButton variant="success" href="127.0.0.1:8080/api/user/auth/loginByWechatUrl">Login by Wechat</BButton>
-        </BCol>
-        <BCol class="text-center">
           <BButton variant="primary" @click="loginHandler">Login in</BButton>
         </BCol>
       </BRow>

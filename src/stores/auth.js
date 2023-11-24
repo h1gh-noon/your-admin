@@ -37,15 +37,16 @@ export const useAuthStore = defineStore('auth', () => {
   // roles routes
   const getAuthInfo = async () => {
     // axios
-    const res = await userInfoApi()
-    if (res.success) {
-      state.userInfo = res.data
+    // const res = await userInfoApi()
+    // if (res.success) {
+    //   state.userInfo = res.data
 
-      // 模拟数据
-      state.routeList = [...staticRouter]
-      state.accessRoutes = []
-      state.userRoles = ['admin']
-    }
+    // 模拟数据
+    state.userInfo = 's'
+    state.routeList = [...staticRouter]
+    state.accessRoutes = []
+    state.userRoles = ['admin']
+    // }
   }
 
   // 过滤需要缓存(keepAlive)的路由
@@ -66,18 +67,28 @@ export const useAuthStore = defineStore('auth', () => {
   const userRolesComputed = computed(() => state.userRoles)
   const accessRoutesComputed = computed(() => state.accessRoutes)
 
-  const loginHandler = data =>
-    loginApi(data).then(res => {
-      if (res.success) {
-        // ...
-        setToken(res.data.token)
-        state.userInfo = res.data.userInfo
-        // 模拟数据
-        state.routeList = [...staticRouter]
-        state.accessRoutes = []
-        state.userRoles = ['admin']
-      }
-    })
+  // const loginHandler = data =>
+  //   loginApi(data).then(res => {
+  //     if (res.success) {
+  //       // ...
+  //       setToken(res.data.token)
+  //       state.userInfo = res.data.userInfo
+  //       // 模拟数据
+  //       state.routeList = [...staticRouter]
+  //       state.accessRoutes = []
+  //       state.userRoles = ['admin']
+  //     }
+  //   })
+  // 模拟接口
+  const loginHandler = () => {
+    // ...
+    setToken('ss')
+    state.userInfo = 'sss'
+    // 模拟数据
+    state.routeList = [...staticRouter]
+    state.accessRoutes = []
+    state.userRoles = ['admin']
+  }
 
   return {
     tokenComputed,

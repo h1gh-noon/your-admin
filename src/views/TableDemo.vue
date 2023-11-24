@@ -56,8 +56,8 @@
             <BTd>{{ item.age }}</BTd>
             <BTd>{{ item.addr }}</BTd>
             <BTd style="width: 135px;">
-              <BButton variant="primary" class="me-md-2">编辑</BButton>
-              <BButton variant="danger">删除</BButton>
+              <BButton variant="primary" class="me-md-2" size="sm">编辑</BButton>
+              <BButton variant="danger" size="sm">删除</BButton>
             </BTd>
           </BTr>
         </template>

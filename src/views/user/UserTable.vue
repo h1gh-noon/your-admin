@@ -1,84 +1,85 @@
 <template>
   <div class="page-content">
-    <div class="page-filter-group">
-      <div class="page-filter-left">
-        <div class="page-filter-item">
-          <BButton pill variant="outline-primary">
-            <div>
-              <SvgIcon iconClass="add" />
-              新增
-            </div>
-          </BButton>
+    <BOverlay :show="showLoading" rounded="sm" opacity="0.8" variant="light" spinner-variant="primary">
+      <div class="page-filter-group">
+        <div class="page-filter-left">
+          <div class="page-filter-item">
+            <BButton pill variant="outline-primary">
+              <div>
+                <SvgIcon iconClass="add" />
+                新增
+              </div>
+            </BButton>
+          </div>
+          <div class="page-filter-item">
+            <BButton pill variant="outline-primary">
+              <div>
+                <SvgIcon iconClass="add" />
+                批量删除
+              </div>
+            </BButton>
+          </div>
         </div>
-        <div class="page-filter-item">
-          <BButton pill variant="outline-primary">
-            <div>
-              <SvgIcon iconClass="add" />
-              批量删除
-            </div>
-          </BButton>
+        <div class="page-filter-right">
+          <div class="page-filter-item">
+            <BInputGroup prepend="姓名">
+              <BFormInput v-model="searchField.username" />
+            </BInputGroup>
+          </div>
+          <div class="page-filter-item">
+            <BInputGroup prepend="昵称">
+              <BFormInput v-model="searchField.nickname" />
+            </BInputGroup>
+          </div>
+          <div class="page-filter-item">
+            <BInputGroup prepend="手机号">
+              <BFormInput v-model="searchField.phone" />
+            </BInputGroup>
+          </div>
+          <div class="page-filter-item">
+            <BButton variant="primary" @click="searchHandler">搜索</BButton>
+          </div>
         </div>
       </div>
-      <div class="page-filter-right">
-        <div class="page-filter-item">
-          <BInputGroup prepend="姓名">
-            <BFormInput v-model="searchField.username" />
-          </BInputGroup>
-        </div>
-        <div class="page-filter-item">
-          <BInputGroup prepend="昵称">
-            <BFormInput v-model="searchField.nickname" />
-          </BInputGroup>
-        </div>
-        <div class="page-filter-item">
-          <BInputGroup prepend="手机号">
-            <BFormInput v-model="searchField.phone" />
-          </BInputGroup>
-        </div>
-        <div class="page-filter-item">
-          <BButton variant="primary" @click="searchHandler">搜索</BButton>
-        </div>
+      <div style="height: calc(100vh - 200px);">
+        <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
+          <template v-if="tableList.tbody.length">
+            <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
+              <BTd stickyColumn variant="light">{{ item.username }}</BTd>
+              <BTd>{{ item.nickname }}</BTd>
+              <BTd>
+                <BPopover v-if="item.headimgurl" :content="item.headimgurl">
+                  <BImg thumbnail fluid :src="item.headimgurl" alt="" />
+                </BPopover>
+                <span :style="{ cursor: item.headimgurl ? 'pointer' : '' }"> {{ item.headimgurl ? '查看' : '-' }} </span>
+              </BTd>
+              <BTd>{{ item.phone }}</BTd>
+              <BTd>{{ item.permissions }}</BTd>
+              <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
+              <BTd>{{ item.createTime }}</BTd>
+              <BTd style="width: 135px;">
+                <BButton variant="primary" class="me-md-2" size="sm">编辑</BButton>
+                <BButton variant="danger" size="sm">删除</BButton>
+              </BTd>
+            </BTr>
+          </template>
+          <BTd v-else :colspan="tableList.thead && tableList.thead.length || 0">
+            <div class="text-center">暂无数据...</div>
+          </BTd>
+        </TableTemplate>
       </div>
-    </div>
-    <div style="height: calc(100vh - 200px);">
-      <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
-        <template v-if="tableList.tbody.length">
-          <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
-            <BTd stickyColumn variant="light">{{ item.username }}</BTd>
-            <BTd>{{ item.nickname }}</BTd>
-            <BTd>
-              <BPopover v-if="item.headimgurl" :content="item.headimgurl">
-                <BImg thumbnail fluid :src="item.headimgurl" alt="" />
-              </BPopover>
-              <span :style="{ cursor: item.headimgurl ? 'pointer' : '' }"> {{ item.headimgurl ? '查看' : '-' }} </span>
-            </BTd>
-            <BTd>{{ item.phone }}</BTd>
-            <BTd>{{ item.permissions }}</BTd>
-            <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
-            <BTd>{{ item.createTime }}</BTd>
-            <BTd style="width: 135px;">
-              <BButton variant="primary" class="me-md-2">编辑</BButton>
-              <BButton variant="danger">删除</BButton>
-            </BTd>
-          </BTr>
-        </template>
-        <BTd v-else :colspan="tableList.thead && tableList.thead.length || 0">
-          <div class="text-center">暂无数据...</div>
-        </BTd>
-      </TableTemplate>
-    </div>
-
-    <TablePagination :total="paginationData.total" :current-page="paginationData.currentPage"
-      :page-size="paginationData.pageSize" @paginationChange="paginationChange" />
+      <TablePagination :total="paginationData.total" :current-page="paginationData.currentPage"
+        :page-size="paginationData.pageSize" @paginationChange="paginationChange" />
+    </BOverlay>
   </div>
 </template>
 <script setup name="user-table">
 import TablePagination from "@/components/table/TablePagination.vue"
 import TableTemplate from "@/components/table/TableTemplate.vue";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { getUserPageList } from "@/api/user";
 
-
+const showLoading = ref(false)
 const searchField = reactive({
   'username': '',
   'nickname': '',
@@ -124,6 +125,7 @@ const sortChange = (e) => {
 }
 
 const getUserPageListHander = (sort) => {
+  showLoading.value = true
   const params = {
     currentPage: paginationData.currentPage,
     pageSize: paginationData.pageSize
@@ -138,6 +140,8 @@ const getUserPageListHander = (sort) => {
       paginationData.total = res.data.total
       tableList.tbody = res.data.data
     }
+  }).finally(() => {
+    showLoading.value = false
   })
 }
 getUserPageListHander()

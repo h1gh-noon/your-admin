@@ -1,7 +1,7 @@
 <template>
   <BTh v-for="item in tableThead" class="thead-item" :sticky-column="item.stickyColumn"
-    :variant="item.stickyColumn ? 'light' : 'primary'" :key="item.key" :class="item.$sort ? 'cur-pointer' : ''"
-    @click="sortChange(item)">
+    variant="primary" :key="item.key"
+    :class="[{ 'cur-pointer': item.$sort }, item.stickyColumn]" @click="sortChange(item)">
     {{ item.label }}
     <SvgIcon v-if="item.$sort" :iconClass="typeof item.$sort === 'string' ? item.$sort : 'sort'"
       :class="item.$sort === 'sort_up' ? 'up-sort' : ''" />
@@ -54,6 +54,8 @@ const sortChange = (e) => {
 
 </script>
 <style lang="scss" scoped>
+@import url(./table.scss);
+
 .table-template-hasPagination {
   height: calc(100vh - 125px);
 }

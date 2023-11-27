@@ -18,6 +18,19 @@ export const errorToast = (
   })
 }
 
+// export const successToast = (msg = '操作成功！', title, value = 2000) => {
+//   show(msg, {
+//     title,
+//     variant: 'success',
+//     pos: 'top-center',
+//     value,
+//     interval: 100,
+//     progressProps: {
+//       variant: 'success'
+//     }
+//   })
+// }
+
 export const successToast = (msg = '操作成功！', title, value = 2000) => {
   show(msg, {
     title,
@@ -31,15 +44,15 @@ export const successToast = (msg = '操作成功！', title, value = 2000) => {
   })
 }
 
-export const infoToast = (msg = '操作成功！', title, value = 2000) => {
+export const infoToast = (msg = '提示！', title, value = 2000) => {
   show(msg, {
     title,
-    variant: 'info',
+    variant: 'light',
     pos: 'top-center',
     value,
     interval: 100,
     progressProps: {
-      variant: 'info'
+      variant: 'light'
     }
   })
 }

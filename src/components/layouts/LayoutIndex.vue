@@ -143,7 +143,7 @@ onMounted(() => {
 }
 
 .left-menu {
-  height: calc(100% - 10px);
+  height: calc(100% - 18px);
   width: 100%;
   margin: 5px 0;
   border-inline-end: 1px solid rgba(5, 5, 5, 0.06);

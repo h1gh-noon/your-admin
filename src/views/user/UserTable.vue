@@ -1,6 +1,7 @@
 <template>
   <div class="page-content">
-    <BOverlay :show="showLoading" rounded="sm" opacity="0.8" variant="light" spinner-variant="primary">
+    <BOverlay :show="showLoading" class="overflow-hidden" rounded="sm" opacity="0.8" variant="light"
+      spinner-variant="primary">
       <div class="page-filter-group">
         <div class="page-filter-left">
           <div class="page-filter-item">
@@ -22,7 +23,7 @@
         </div>
         <div class="page-filter-right">
           <div class="page-filter-item">
-            <BInputGroup prepend="姓名">
+            <BInputGroup prepend="用户名">
               <BFormInput v-model="searchField.username" />
             </BInputGroup>
           </div>
@@ -41,11 +42,11 @@
           </div>
         </div>
       </div>
-      <div style="height: calc(100vh - 200px);">
+      <div class="overflow-auto">
         <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
           <template v-if="tableList.tbody.length">
             <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
-              <BTd stickyColumn variant="light">{{ item.username }}</BTd>
+              <BTd class="sticky-left">{{ item.username }}</BTd>
               <BTd>{{ item.nickname }}</BTd>
               <BTd>
                 <BPopover v-if="item.headimgurl" :content="item.headimgurl">
@@ -57,7 +58,7 @@
               <BTd>{{ item.permissions }}</BTd>
               <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
               <BTd>{{ item.createTime }}</BTd>
-              <BTd style="width: 135px;">
+              <BTd style="width: 135px;" class="sticky-right">
                 <BButton variant="primary" class="me-md-2" size="sm">编辑</BButton>
                 <BButton variant="danger" size="sm">删除</BButton>
               </BTd>
@@ -68,8 +69,9 @@
           </BTd>
         </TableTemplate>
       </div>
-      <TablePagination :total="paginationData.total" :current-page="paginationData.currentPage"
-        :page-size="paginationData.pageSize" @paginationChange="paginationChange" />
+      <TablePagination v-show="tableList.tbody.length" :total="paginationData.total"
+        :current-page="paginationData.currentPage" :page-size="paginationData.pageSize"
+        @paginationChange="paginationChange" />
     </BOverlay>
   </div>
 </template>
@@ -92,14 +94,14 @@ const paginationData = reactive({
 })
 const tableList = reactive({
   thead: [
-    { key: 'username', label: '用户名', stickyColumn: true },
+    { key: 'username', label: '用户名', stickyColumn: 'sticky-left' },
     { key: 'nickname', label: '昵称' },
     { key: 'headimgurl', label: '微信头像' },
     { key: 'phone', label: '手机号' },
     { key: 'permissions', label: '权限' },
     { key: 'status', label: '用户状态' },
     { key: 'createTime', label: '用户创建时间', $sort: true },
-    { key: 'option', label: '操作' }
+    { key: 'option', label: '操作', stickyColumn: 'sticky-right' }
   ],
   tbody: []
 })
@@ -153,6 +155,8 @@ const searchHandler = () => {
 </script>
 
 <style lang="scss" scoped>
+@import url(@/components/table/table.scss);
+
 .page-content {
   height: 100%;
 }

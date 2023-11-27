@@ -1,7 +1,7 @@
 <template>
-  <BTableSimple class="table-template" :class="'table-template-hasPagination'" bordered stickyHeader hover small
-    caption-top responsive>
-    <BThead variant="primary">
+  <BTableSimple class="table-template table-template-hasPagination" borderless stickyHeader hover small caption-top
+    responsive>
+    <BThead>
       <BTr>
         <slot v-if="slotThead" name="thead" />
         <TableHeadSort v-else-if="tableThead" :tableThead="tableThead" @sortChange="sortChange" />

@@ -275,8 +275,8 @@ const confirmHandler = async () => {
     } else {
       errorToast()
     }
-  } catch (error) { } finally {
     getUserPageListHander()
+  } catch (error) { } finally {
   }
 
 }
@@ -300,7 +300,6 @@ const confirmDelHandler = () => {
       successToast()
       modalDialogDel.value = false
     }
-  }).finally(() => {
     getUserPageListHander()
   })
 }

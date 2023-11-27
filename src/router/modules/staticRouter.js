@@ -38,7 +38,7 @@ export const staticRouter = [
         name: 'user-table',
         component: () => import('@/views/user/UserTable.vue'),
         meta: {
-          title: '用户列表',
+          title: '用户管理',
           icon: 'db'
         }
       }

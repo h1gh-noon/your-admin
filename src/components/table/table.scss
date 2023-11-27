@@ -1,8 +1,22 @@
-.sticky-left {
+@mixin sticky() {
   position: sticky;
+  z-index: 1;
+}
+.sticky-left {
+  @include sticky;
   left: 0;
 }
 .sticky-right {
-  position: sticky;
+  @include sticky;
   right: 0;
+}
+.sticky-header-top {
+  @include sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.sticky-header-top.sticky-left,
+.sticky-header-top.sticky-right {
+  z-index: 3;
 }

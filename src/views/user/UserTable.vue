@@ -1,7 +1,6 @@
 <template>
   <div class="page-content">
-    <BOverlay :show="showLoading" class="overflow-hidden" rounded="sm" opacity="0.8" variant="light"
-      spinner-variant="primary">
+    <BOverlay :show="showLoading" class="h-100" rounded="sm" opacity="0.8" variant="light" spinner-variant="primary">
       <div class="page-filter-group">
         <div class="page-filter-left">
           <div class="page-filter-item">
@@ -42,33 +41,31 @@
           </div>
         </div>
       </div>
-      <div class="overflow-auto">
-        <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
-          <template v-if="tableList.tbody.length">
-            <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
-              <BTd class="sticky-left">{{ item.username }}</BTd>
-              <BTd>{{ item.nickname }}</BTd>
-              <BTd>
-                <BPopover v-if="item.headimgurl" :content="item.headimgurl">
-                  <BImg thumbnail fluid :src="item.headimgurl" alt="" />
-                </BPopover>
-                <span :style="{ cursor: item.headimgurl ? 'pointer' : '' }"> {{ item.headimgurl ? '查看' : '-' }} </span>
-              </BTd>
-              <BTd>{{ item.phone }}</BTd>
-              <BTd>{{ item.permissions }}</BTd>
-              <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
-              <BTd>{{ item.createTime }}</BTd>
-              <BTd style="width: 135px;" class="sticky-right">
-                <BButton variant="primary" class="me-md-2" size="sm" @click="editDialog(item)">编辑</BButton>
-                <BButton variant="danger" size="sm" @click="delHandler(item)">删除</BButton>
-              </BTd>
-            </BTr>
-          </template>
-          <BTd v-else :colspan="tableList.thead && tableList.thead.length || 0">
-            <div class="text-center">暂无数据...</div>
-          </BTd>
-        </TableTemplate>
-      </div>
+      <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
+        <template v-if="tableList.tbody.length">
+          <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
+            <BTd class="sticky-left">{{ item.username }}</BTd>
+            <BTd>{{ item.nickname }}</BTd>
+            <BTd>
+              <BPopover v-if="item.headimgurl" :content="item.headimgurl">
+                <BImg thumbnail fluid :src="item.headimgurl" alt="" />
+              </BPopover>
+              <span :style="{ cursor: item.headimgurl ? 'pointer' : '' }"> {{ item.headimgurl ? '查看' : '-' }} </span>
+            </BTd>
+            <BTd>{{ item.phone }}</BTd>
+            <BTd>{{ item.permissions }}</BTd>
+            <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
+            <BTd>{{ item.createTime }}</BTd>
+            <BTd style="width: 135px;" class="sticky-right">
+              <BButton variant="primary" class="me-md-2" size="sm" @click="editDialog(item)">编辑</BButton>
+              <BButton variant="danger" size="sm" @click="delHandler(item)">删除</BButton>
+            </BTd>
+          </BTr>
+        </template>
+        <BTd v-else :colspan="tableList.thead && tableList.thead.length || 0">
+          <div class="text-center">暂无数据...</div>
+        </BTd>
+      </TableTemplate>
       <TablePagination v-show="tableList.tbody.length" :total="paginationData.total"
         :current-page="paginationData.currentPage" :page-size="paginationData.pageSize"
         @paginationChange="paginationChange" />

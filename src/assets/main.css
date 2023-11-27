@@ -41,7 +41,7 @@ td {
 
 /* layout */
 .page-content {
-  padding: 20px;
+  padding: 10px;
   min-height: 100vh;
   min-width: 320px;
 }
@@ -61,7 +61,7 @@ td {
 }
 .page-filter-item {
   margin-right: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 .page-filter-item:first-child {
   margin-left: 0;

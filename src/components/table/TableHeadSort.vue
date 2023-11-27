@@ -1,7 +1,7 @@
 <template>
-  <BTh v-for="item in tableThead" class="thead-item" :sticky-column="item.stickyColumn"
-    variant="primary" :key="item.key"
-    :class="[{ 'cur-pointer': item.$sort }, item.stickyColumn]" @click="sortChange(item)">
+  <BTh v-for="item in tableThead" class="thead-item sticky-header-top" :sticky-column="item.stickyColumn"
+    variant="primary" :key="item.key" :class="[{ 'cur-pointer': item.$sort }, item.stickyColumn]"
+    @click="sortChange(item)">
     {{ item.label }}
     <SvgIcon v-if="item.$sort" :iconClass="typeof item.$sort === 'string' ? item.$sort : 'sort'"
       :class="item.$sort === 'sort_up' ? 'up-sort' : ''" />

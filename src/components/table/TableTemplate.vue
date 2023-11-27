@@ -1,16 +1,17 @@
 <template>
-  <BTableSimple class="table-template table-template-hasPagination" borderless stickyHeader hover small caption-top
-    responsive>
-    <BThead>
-      <BTr>
-        <slot v-if="slotThead" name="thead" />
-        <TableHeadSort v-else-if="tableThead" :tableThead="tableThead" @sortChange="sortChange" />
-      </BTr>
-    </BThead>
-    <BTbody>
-      <slot />
-    </BTbody>
-  </BTableSimple>
+  <div class="overflow-auto" :style="calcHeight ? `height: calc(100% - ${calcHeight});` : ''">
+    <BTableSimple class="table-template" borderless hover small caption-top responsive>
+      <BThead>
+        <BTr>
+          <slot v-if="slotThead" name="thead" />
+          <TableHeadSort v-else-if="tableThead" :tableThead="tableThead" @sortChange="sortChange" />
+        </BTr>
+      </BThead>
+      <BTbody>
+        <slot />
+      </BTbody>
+    </BTableSimple>
+  </div>
 </template>
 <script setup name="table-template">
 import { useSlots } from "vue";
@@ -36,6 +37,10 @@ const props = defineProps({
   tableThead: {
     type: Array,
     default: null
+  },
+  calcHeight: {
+    type: [String, Boolean],
+    default: '130px'
   }
 })
 const emit = defineEmits(['sortChange'])
@@ -49,8 +54,10 @@ const sortChange = (e) => {
 
 </script>
 <style lang="scss" scoped>
+@import url(./table.scss);
+
 .table-template-hasPagination {
-  max-height: calc(100% - 120px);
+  // max-height: calc(100% - 120px);
 }
 
 .table-template {

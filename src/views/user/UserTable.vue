@@ -5,7 +5,7 @@
       <div class="page-filter-group">
         <div class="page-filter-left">
           <div class="page-filter-item">
-            <BButton pill variant="outline-primary">
+            <BButton pill variant="outline-primary" @click="modalDialog = true">
               <div>
                 <SvgIcon iconClass="add" />
                 新增
@@ -59,8 +59,8 @@
               <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
               <BTd>{{ item.createTime }}</BTd>
               <BTd style="width: 135px;" class="sticky-right">
-                <BButton variant="primary" class="me-md-2" size="sm">编辑</BButton>
-                <BButton variant="danger" size="sm">删除</BButton>
+                <BButton variant="primary" class="me-md-2" size="sm" @click="editDialog(item)">编辑</BButton>
+                <BButton variant="danger" size="sm" @click="delHandler(item)">删除</BButton>
               </BTd>
             </BTr>
           </template>
@@ -73,13 +73,69 @@
         :current-page="paginationData.currentPage" :page-size="paginationData.pageSize"
         @paginationChange="paginationChange" />
     </BOverlay>
+
+    <BModal v-model="modalDialog" scrollable @hide.prevent :title="typeof (data.id) === 'number' ? '修改' : '新增'"
+      @hidden="dialogClose" @cancel="modalDialog = false" @close="modalDialog = false" @ok="confirmHandler">
+      <BContainer class="form-fields">
+        <BRow>
+          <BCol>
+            <BFormGroup description="Let us know your name." label="username" label-for="input-horizontal"
+              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback=""
+              :invalid-feedback="validList.username.invalid" :state="validList.username.valid">
+              <BFormInput v-model="data.username" :state="validList.username.valid" trim placeholder="" />
+            </BFormGroup>
+          </BCol>
+        </BRow>
+        <BRow>
+          <BCol>
+            <BFormGroup description="Let us know your password." label="password" label-for="input-horizontal"
+              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback=""
+              :invalid-feedback="validList.password.invalid" :state="validList.password.valid">
+              <BFormInput v-model="data.password" :state="validList.password.valid" trim placeholder="" />
+            </BFormGroup>
+          </BCol>
+        </BRow>
+        <BRow>
+          <BCol>
+            <BFormGroup description="Let us know your nickname." label="nickname" label-for="input-horizontal"
+              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
+              <BFormInput v-model="data.nickname" trim placeholder="" />
+            </BFormGroup>
+          </BCol>
+        </BRow>
+        <BRow>
+          <BCol>
+            <BFormGroup description="Let us know your phone." label="phone" label-for="input-horizontal" label-cols-sm="4"
+              label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
+              <BFormInput v-model="data.phone" trim placeholder="" />
+            </BFormGroup>
+          </BCol>
+        </BRow>
+        <BRow>
+          <BCol>
+            <BFormGroup description="Let us know your permissions." label="permissions" label-for="input-horizontal"
+              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
+              <BFormInput v-model="data.permissions" trim placeholder="" />
+            </BFormGroup>
+          </BCol>
+        </BRow>
+      </BContainer>
+    </BModal>
+    <BModal v-model="modalDialogDel" @hide.prevent title="删除确认" @cancel="dialogDelCancel" @close="dialogDelCancel"
+      @ok="confirmDelHandler">
+      确认删除用户 {{ delUser?.username }} ?
+    </BModal>
   </div>
 </template>
 <script setup name="user-table">
+import md5 from "js-md5";
 import TablePagination from "@/components/table/TablePagination.vue"
 import TableTemplate from "@/components/table/TableTemplate.vue";
-import { reactive, ref } from "vue";
-import { getUserPageList } from "@/api/user";
+import { errorToast, successToast, infoToast } from "@/components/Toast";
+import { reactive, ref, toRefs, computed } from "vue";
+import { getUserPageList, userAdd, userDelete } from "@/api/user";
+import { deepClone, objectOverwrite } from "@/utils";
+import { BRow } from "bootstrap-vue-next";
 
 const showLoading = ref(false)
 const searchField = reactive({
@@ -151,6 +207,102 @@ getUserPageListHander()
 const searchHandler = () => {
   paginationData.currentPage = 1
   getUserPageListHander()
+}
+
+const modalDialog = ref(false)
+const _data = {
+  id: null,
+  username: '',
+  password: '',
+  nickname: '',
+  headimgurl: '',
+  phone: '',
+  permissions: '',
+}
+const userData = reactive({ data: deepClone(_data) })
+
+// 校验
+const validList = reactive({
+  username: {
+    valid: computed(() => userData.data.username.length >= 4),
+    invalid: computed(() =>
+      userData.data.username.length > 0 ? 'Enter at least 4 characters.' : ''
+    )
+  },
+  password: {
+    valid: computed(() => userData.data.password.length >= 4),
+    invalid: computed(() =>
+      userData.data.password.length > 0 ? 'Enter at least 4 characters.' : ''
+    )
+  }
+})
+// 字段校验是否通过
+const formValidFlag = computed(() => {
+  return !Object.keys(validList).some(e => !validList[e].valid)
+})
+
+
+const dialogClose = () => {
+  userData.data = deepClone(_data)
+}
+
+const editDialog = (item) => {
+  modalDialog.value = true
+  objectOverwrite(userData.data, item)
+}
+const { data } = toRefs(userData)
+const confirmHandler = async () => {
+  if (!formValidFlag) {
+    errorToast('请检查表单!')
+    return
+  }
+
+  try {
+    let res = null
+    const obj = deepClone(data.value)
+    obj.password = md5(obj.password).toUpperCase()
+
+    if (typeof (obj.id) === 'number') {
+      res = await userUpdate(obj)
+    } else {
+      delete obj.id
+      res = await userAdd(obj)
+    }
+
+    if (res.success) {
+      successToast()
+      modalDialog.value = false
+    } else {
+      errorToast()
+    }
+  } catch (error) { } finally {
+    getUserPageListHander()
+  }
+
+}
+
+// delete
+const delUser = ref(null)
+const modalDialogDel = ref(false)
+
+const delHandler = (item) => {
+  delUser.value = item
+  modalDialogDel.value = true
+}
+const dialogDelCancel = () => {
+  modalDialogDel.value = false
+  infoToast('操作已取消！')
+}
+
+const confirmDelHandler = () => {
+  userDelete({ id: delUser.value.id }).then(res => {
+    if (res.success) {
+      successToast()
+      modalDialogDel.value = false
+    }
+  }).finally(() => {
+    getUserPageListHander()
+  })
 }
 </script>
 

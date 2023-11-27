@@ -8,3 +8,27 @@ export const getUserPageList = (params, data) => {
     data
   })
 }
+
+export const userAdd = (data) => {
+  return request({
+    method: 'post',
+    url: '/user/user/userAdd',
+    data
+  })
+}
+
+export const userUpdate = (data) => {
+  return request({
+    method: 'post',
+    url: '/user/user/userUpdate',
+    data
+  })
+}
+
+export const userDelete = (params) => {
+  return request({
+    method: 'post',
+    url: '/user/user/userDelete',
+    params
+  })
+}

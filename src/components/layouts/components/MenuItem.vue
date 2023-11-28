@@ -1,12 +1,12 @@
 
 <template>
   <template v-if="showDropFlag">
-    <div class="menu-title" @click="itemRoute.visible = !itemRoute.visible">
+    <div class="menu-title menu-title-dropdown" @click="itemRoute.visible = !itemRoute.visible">
       <SvgIcon :iconClass="itemRoute?.meta?.icon" />
       <div class="menu-title-text" :title="itemRoute.meta?.title ?? ''">
         {{ itemRoute.meta?.title ?? '' }}
       </div>
-      <SvgIcon iconClass="down" style="transition: transform 0.5s;" :class="{ 'icon-down-actived': itemRoute.visible }" />
+      <SvgIcon iconClass="down" style="transition: transform 0.2s;" :class="{ 'icon-down-actived': itemRoute.visible }" />
     </div>
     <BCollapse v-model="itemRoute.visible">
       <MenuItem v-for="child in itemRoute.children" :key="child.name" :itemRoute="child" :basePath="itemRoute.path"
@@ -81,10 +81,13 @@ watchEffect(() => {
   // margin: 0 2%;
   cursor: pointer;
   border-radius: 12px;
-
+  
   display: flex;
   align-items: center;
-
+  
+}
+.menu-title-dropdown {
+  color: #15559a;
 }
 
 .menu-title:hover {

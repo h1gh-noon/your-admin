@@ -12,7 +12,7 @@
               <div>
                 {{ userInfoComputed.username }}
               </div>
-              <BButton pill size="sm" variant="outline-primary" @click="logoutHandler">
+              <BButton pill size="sm" variant="outline-primary" @click="modalDialogLogout = true">
                 <SvgIcon iconClass="logout" />
                 退出登录
               </BButton>
@@ -47,6 +47,9 @@
         </Transition>
       </RouterView>
     </div>
+    <BModal v-model="modalDialogLogout" title="提示" @ok="logoutHandler">
+      确认退出登录？
+    </BModal>
   </div>
 </template>
 <script setup name="layout-index">
@@ -96,6 +99,8 @@ const logoutHandler = () => {
     }
   })
 }
+
+const modalDialogLogout = ref(false)
 
 onMounted(() => {
   // 初始化
@@ -196,17 +201,19 @@ onMounted(() => {
 /* show-menu-transform transition*/
 .show-menu-transform-leave-active,
 .show-menu-transform-enter-active {
-  transition: all 0.6s ease;
+  transition: all 0.5s ease;
 }
 
 .show-menu-transform-enter-from {
   width: 0;
-  transition: all 0.6s ease;
+  opacity: 0;
+  transition: all 0.5s ease;
 }
 
 .show-menu-transform-leave-to {
   width: 0;
-  transition: all 0.6s ease;
+  opacity: 0;
+  transition: all 0.5s ease;
 }
 
 

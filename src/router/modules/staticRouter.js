@@ -39,6 +39,67 @@ export const staticRouter = [
         component: () => import('@/views/user/UserTable.vue'),
         meta: {
           title: '用户管理',
+          keepAlive: true,
+          icon: 'db'
+        }
+      }
+    ]
+  },
+  {
+    path: '/shop',
+    name: 'shop',
+    component: Layout,
+    meta: {
+      title: '店铺管理',
+      icon: 'server'
+    },
+    children: [
+      {
+        path: 'shopCategoryTable',
+        name: 'shop-category',
+        component: () => import('@/views/shop/ShopCategory.vue'),
+        meta: {
+          title: '店铺分类',
+          icon: 'db'
+        }
+      },
+      {
+        path: 'shopTable',
+        name: 'shop-table',
+        component: () => import('@/views/shop/ShopTable.vue'),
+        meta: {
+          title: '店铺',
+          keepAlive: true,
+          icon: 'db'
+        }
+      }
+    ]
+  },
+  {
+    path: '/product',
+    name: 'product',
+    component: Layout,
+    meta: {
+      title: '商品管理',
+      icon: 'server'
+    },
+    children: [
+      {
+        path: 'productCategoryTable',
+        name: 'product-category',
+        component: () => import('@/views/product/ProductCategory.vue'),
+        meta: {
+          title: '商品分类',
+          icon: 'db'
+        }
+      },
+      {
+        path: 'productTable',
+        name: 'product-table',
+        component: () => import('@/views/product/ProductTable.vue'),
+        meta: {
+          title: '商品',
+          keepAlive: true,
           icon: 'db'
         }
       }

@@ -23,17 +23,17 @@
         <div class="page-filter-right">
           <div class="page-filter-item">
             <BInputGroup prepend="用户名">
-              <BFormInput v-model="searchField.username" />
+              <BFormInput v-model="searchField.username" @keyup.enter="searchHandler" />
             </BInputGroup>
           </div>
           <div class="page-filter-item">
             <BInputGroup prepend="昵称">
-              <BFormInput v-model="searchField.nickname" />
+              <BFormInput v-model="searchField.nickname" @keyup.enter="searchHandler" />
             </BInputGroup>
           </div>
           <div class="page-filter-item">
             <BInputGroup prepend="手机号">
-              <BFormInput v-model="searchField.phone" />
+              <BFormInput v-model="searchField.phone" @keyup.enter="searchHandler" />
             </BInputGroup>
           </div>
           <div class="page-filter-item">
@@ -130,9 +130,8 @@ import TablePagination from "@/components/table/TablePagination.vue"
 import TableTemplate from "@/components/table/TableTemplate.vue";
 import { errorToast, successToast, infoToast } from "@/components/Toast";
 import { reactive, ref, toRefs, computed } from "vue";
-import { getUserPageList, userAdd, userDelete } from "@/api/user";
+import { getUserPageList, userAdd, userUpdate, userDelete } from "@/api/user";
 import { deepClone, objectOverwrite } from "@/utils";
-import { BRow } from "bootstrap-vue-next";
 
 const showLoading = ref(false)
 const searchField = reactive({

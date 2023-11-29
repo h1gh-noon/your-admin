@@ -177,7 +177,7 @@ onMounted(() => {
 .layout-main {
   flex: 1;
   height: 100vh;
-  overflow: auto;
+  overflow: hidden;
 }
 
 /* fade-transform transition*/

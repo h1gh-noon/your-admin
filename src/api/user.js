@@ -32,3 +32,11 @@ export const userDelete = (params) => {
     params
   })
 }
+
+export const userUpdateStatus = (data) => {
+  return request({
+    method: 'post',
+    url: '/user/user/userUpdateStatus',
+    data
+  })
+}

@@ -58,6 +58,8 @@
             <BTd>{{ item.createTime }}</BTd>
             <BTd style="width: 135px;" class="sticky-right">
               <BButton variant="primary" class="me-md-2" size="sm" @click="editDialog(item)">编辑</BButton>
+              <BButton variant="primary" class="me-md-2" size="sm" @click="disableUserHandler(item)">{{ item.status === 1
+                ? '禁用' : '启用' }}</BButton>
               <BButton variant="danger" size="sm" @click="delHandler(item)">删除</BButton>
             </BTd>
           </BTr>
@@ -118,9 +120,9 @@
         </BRow>
       </BContainer>
     </BModal>
-    <BModal v-model="modalDialogDel" @hide.prevent title="删除确认" @cancel="dialogDelCancel" @close="dialogDelCancel"
-      @ok="confirmDelHandler">
-      确认删除用户 {{ delUser?.username }} ?
+    <BModal v-model="modalDialogConfirm" @hide.prevent :title="`${confirmDialogInfo.text}确认`" @cancel="dialogCancel"
+      @close="dialogCancel" @ok="confirmDialogHandler">
+      确认{{ confirmDialogInfo.text }}用户 {{ dataInfo?.username }} ?
     </BModal>
   </div>
 </template>
@@ -130,7 +132,7 @@ import TablePagination from "@/components/table/TablePagination.vue"
 import TableTemplate from "@/components/table/TableTemplate.vue";
 import { errorToast, successToast, infoToast } from "@/components/Toast";
 import { reactive, ref, toRefs, computed } from "vue";
-import { getUserPageList, userAdd, userUpdate, userDelete } from "@/api/user";
+import { getUserPageList, userAdd, userUpdate, userDelete, userUpdateStatus } from "@/api/user";
 import { deepClone, objectOverwrite } from "@/utils";
 
 const showLoading = ref(false)
@@ -276,28 +278,52 @@ const confirmHandler = async () => {
   }
 
 }
+const disableUserHandler = (item) => {
+  confirmDialogInfo.value = {
+    text: item.status === 1
+      ? '禁用' : '启用',
+    type: 'disable'
+  }
+  dataInfo.value = item
+  modalDialogConfirm.value = true
+}
+// action
+const dataInfo = ref(null)
+const confirmDialogInfo = ref({
+  text: '删除',
+  type: 'delete'
+})
 
-// delete
-const delUser = ref(null)
-const modalDialogDel = ref(false)
+const modalDialogConfirm = ref(false)
 
 const delHandler = (item) => {
-  delUser.value = item
-  modalDialogDel.value = true
+  confirmDialogInfo.value = {
+    text: '删除',
+    type: 'delete'
+  }
+  dataInfo.value = item
+  modalDialogConfirm.value = true
 }
-const dialogDelCancel = () => {
-  modalDialogDel.value = false
+const dialogCancel = () => {
+  modalDialogConfirm.value = false
   infoToast('操作已取消！')
 }
 
-const confirmDelHandler = () => {
-  userDelete({ id: delUser.value.id }).then(res => {
+const confirmDialogHandler = async () => {
+  let res = null
+  try {
+    if (confirmDialogInfo.value.type === 'delete') {
+      res = await userDelete({ id: dataInfo.value.id })
+    } else {
+      res = await userUpdateStatus({ id: dataInfo.value.id, status: dataInfo.value.status === 1 ? 0 : 1 })
+    }
     if (res.success) {
       successToast()
-      modalDialogDel.value = false
+      modalDialogConfirm.value = false
     }
-    getUserPageListHander()
-  })
+  } catch (error) {
+  }
+  getUserPageListHander()
 }
 </script>
 

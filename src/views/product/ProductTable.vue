@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <TableTemplate :table-thead="tableList.thead" @sortChange="sortChange">
+      <TableTemplate :table-thead="tableList.thead">
         <template v-if="tableList.tbody.length">
           <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
             <BTd class="sticky-left">{{ item.name }}</BTd>

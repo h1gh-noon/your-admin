@@ -135,6 +135,7 @@ onMounted(() => {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-align: center;
 }
   .avatar-img {
     width: 25%;

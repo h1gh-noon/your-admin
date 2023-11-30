@@ -9,7 +9,7 @@
           <div class="left-bar">
             <div class="user-info">
               <img class="avatar-img" src="" alt="" :onError="e => e.target.src = errorImg">
-              <div>
+              <div class="user-name" :title="userInfoComputed.username">
                 {{ userInfoComputed.username }}
               </div>
               <BButton pill size="sm" variant="outline-primary" @click="modalDialogLogout = true">
@@ -130,6 +130,12 @@ onMounted(() => {
   overflow: hidden;
   margin: 10px 0;
 
+.user-name{
+  width: 180px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
   .avatar-img {
     width: 25%;
     border-radius: 50%;

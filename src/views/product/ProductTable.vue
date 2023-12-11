@@ -27,7 +27,7 @@
             <BTd class="sticky-left">{{ item.name }}</BTd>
             <BTd>
               <BPopover v-if="item.imgUrl" :content="item.imgUrl">
-                <BImg thumbnail fluid :src="item.imgUrl" alt="" />
+                <BImg fluid :src="item.imgUrl" alt="" @error="() => item.imgUrl = ''" />
               </BPopover>
               <span :style="{ cursor: item.imgUrl ? 'pointer' : '' }"> {{ item.imgUrl ? '查看' : '-' }} </span>
             </BTd>
@@ -98,9 +98,10 @@
         </BRow>
         <BRow>
           <BCol>
+
             <BFormGroup description="Let us know your type." label="type" label-for="input-horizontal" label-cols-sm="4"
               label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormInput v-model="data.type" trim placeholder="" />
+              <BFormSelect v-model="data.type" valueField="id" textField="name" :options="typeList" />
             </BFormGroup>
           </BCol>
         </BRow>
@@ -140,8 +141,8 @@
 import TablePagination from "@/components/table/TablePagination.vue"
 import TableTemplate from "@/components/table/TableTemplate.vue";
 import { errorToast, successToast, infoToast } from "@/components/Toast";
-import { reactive, ref, toRefs } from "vue";
-import { getProductPageList, productAdd, productUpdate, productDelete } from "@/api/product";
+import { reactive, ref, toRefs, onActivated } from "vue";
+import { getProductPageList, productAdd, productUpdate, productDelete, getProductCategoryList } from "@/api/product";
 import { deepClone, objectOverwrite } from "@/utils";
 
 const showLoading = ref(false)
@@ -193,6 +194,17 @@ const getProductPageListHander = (sort) => {
 }
 getProductPageListHander()
 
+const typeList = ref([])
+const initProductCategoryList = () => {
+  getProductCategoryList().then(res => {
+    if (res.success) {
+      typeList.value = res.data
+    }
+  })
+}
+onActivated(() => {
+  initProductCategoryList()
+})
 const modalDialog = ref(false)
 const _data = {
   id: null,

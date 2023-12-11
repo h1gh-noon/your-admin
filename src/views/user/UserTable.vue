@@ -48,7 +48,7 @@
             <BTd>{{ item.nickname }}</BTd>
             <BTd>
               <BPopover v-if="item.headimgurl" :content="item.headimgurl">
-                <BImg thumbnail fluid :src="item.headimgurl" alt="" />
+                <BImg fluid :src="item.headimgurl" alt="" @error="() => item.imgUrl = ''" />
               </BPopover>
               <span :style="{ cursor: item.headimgurl ? 'pointer' : '' }"> {{ item.headimgurl ? '查看' : '-' }} </span>
             </BTd>
@@ -63,6 +63,7 @@
               <BButton variant="danger" size="sm" @click="delHandler(item)">删除</BButton>
             </BTd>
           </BTr>
+          
         </template>
         <BTd v-else :colspan="tableList.thead && tableList.thead.length || 0">
           <div class="text-center">暂无数据...</div>

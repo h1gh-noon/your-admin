@@ -27,7 +27,7 @@
             <BTd class="sticky-left">{{ item.name }}</BTd>
             <BTd>
               <BPopover v-if="item.imgUrl" :content="item.imgUrl">
-                <BImg thumbnail fluid :src="item.imgUrl" alt="" />
+                <BImg fluid :src="item.imgUrl" alt="" @error="() => item.imgUrl = ''" />
               </BPopover>
               <span :style="{ cursor: item.imgUrl ? 'pointer' : '' }"> {{ item.imgUrl ? '查看' : '-' }} </span>
             </BTd>
@@ -64,7 +64,7 @@
           <BCol>
             <BFormGroup description="Let us know your cateId." label="cateId" label-for="input-horizontal"
               label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormInput v-model="data.cateId" trim placeholder="" />
+              <BFormSelect v-model="data.cateId" valueField="id" textField="name" :options="categoryList" />
             </BFormGroup>
           </BCol>
         </BRow>
@@ -94,8 +94,8 @@
         </BRow>
         <BRow>
           <BCol>
-            <BFormGroup description="Let us know your descDetail." label="descDetail" label-for="input-horizontal" label-cols-sm="4"
-              label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
+            <BFormGroup description="Let us know your descDetail." label="descDetail" label-for="input-horizontal"
+              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
               <BFormInput v-model="data.descDetail" trim placeholder="" />
             </BFormGroup>
           </BCol>
@@ -128,8 +128,8 @@
 import TablePagination from "@/components/table/TablePagination.vue"
 import TableTemplate from "@/components/table/TableTemplate.vue";
 import { errorToast, successToast, infoToast } from "@/components/Toast";
-import { reactive, ref, toRefs } from "vue";
-import { getShopPageList, shopAdd, shopUpdate, shopDelete } from "@/api/shop";
+import { reactive, ref, toRefs, onActivated } from "vue";
+import { getShopPageList, shopAdd, shopUpdate, shopDelete, getShopCategoryList } from "@/api/shop";
 import { deepClone, objectOverwrite } from "@/utils";
 
 const showLoading = ref(false)
@@ -149,7 +149,6 @@ const tableList = reactive({
   ],
   tbody: []
 })
-
 const paginationChange = (currentPage, pageSize) => {
   paginationData.currentPage = currentPage ?? paginationData.currentPage
   paginationData.pageSize = pageSize ?? paginationData.pageSize
@@ -176,6 +175,18 @@ const getShopPageListHander = (sort) => {
   })
 }
 getShopPageListHander()
+
+const categoryList = ref([])
+const initShopCategoryList = () => {
+  getShopCategoryList().then(res => {
+    if (res.success) {
+      categoryList.value = res.data
+    }
+  })
+}
+onActivated(() => {
+  initShopCategoryList()
+})
 
 const modalDialog = ref(false)
 const _data = {

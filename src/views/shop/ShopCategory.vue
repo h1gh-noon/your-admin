@@ -19,7 +19,7 @@
             <BTd class="sticky-left">{{ item.name }}</BTd>
             <BTd>
               <BPopover v-if="item.imgUrl" :content="item.imgUrl">
-                <BImg thumbnail fluid :src="item.imgUrl" alt="" />
+                <BImg fluid :src="item.imgUrl" alt="" @error="() => item.imgUrl = ''" />
               </BPopover>
               <span :style="{ cursor: item.imgUrl ? 'pointer' : '' }"> {{ item.imgUrl ? '查看' : '-' }} </span>
             </BTd>

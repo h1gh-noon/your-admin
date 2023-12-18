@@ -45,9 +45,9 @@
         </BRow>
         <BRow>
           <BCol>
-            <BFormGroup description="Let us know your shopId." label="shopId" label-for="input-horizontal"
-              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormInput v-model="data.shopId" trim placeholder="" />
+            <BFormGroup description="Let us know your shop." label="shopId" label-for="input-horizontal" label-cols-sm="4"
+              label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
+              <BFormSelect v-model="data.shopId" valueField="id" textField="name" :options="shopList" />
             </BFormGroup>
           </BCol>
         </BRow>
@@ -79,8 +79,9 @@
 <script setup name="product-category">
 import TableTemplate from "@/components/table/TableTemplate.vue";
 import { errorToast, successToast, infoToast } from "@/components/Toast";
-import { reactive, ref, toRefs } from "vue";
+import { reactive, ref, toRefs, onMounted } from "vue";
 import { getProductCategoryList, productCategoryAdd, productCategoryUpdate, productCategoryDelete } from "@/api/product";
+import { getShopList } from "@/api/shop";
 import { deepClone, objectOverwrite } from "@/utils";
 
 const showLoading = ref(false)
@@ -107,6 +108,19 @@ const getPageListHander = (sort) => {
   })
 }
 getPageListHander()
+
+const shopList = ref([])
+const initShopList = () => {
+  getShopList().then(res => {
+    if (res.success) {
+      shopList.value = res.data
+    }
+  })
+}
+
+onMounted(() => {
+  initShopList()
+})
 
 const modalDialog = ref(false)
 const _data = {

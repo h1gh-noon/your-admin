@@ -11,14 +11,14 @@
               </div>
             </BButton>
           </div>
-          <div class="page-filter-item">
+          <!-- <div class="page-filter-item">
             <BButton pill variant="outline-primary">
               <div>
                 <SvgIcon iconClass="add" />
                 批量删除
               </div>
             </BButton>
-          </div>
+          </div> -->
         </div>
       </div>
       <TableTemplate :table-thead="tableList.thead">
@@ -107,9 +107,9 @@
         </BRow>
         <BRow>
           <BCol>
-            <BFormGroup description="Let us know your shopId." label="shopId" label-for="input-horizontal"
+            <BFormGroup description="Let us know your shop." label="shopId" label-for="input-horizontal"
               label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormInput v-model="data.shopId" trim placeholder="" />
+              <BFormSelect v-model="data.shopId" valueField="id" textField="name" :options="shopList" />
             </BFormGroup>
           </BCol>
         </BRow>
@@ -143,6 +143,7 @@ import TableTemplate from "@/components/table/TableTemplate.vue";
 import { errorToast, successToast, infoToast } from "@/components/Toast";
 import { reactive, ref, toRefs, onActivated } from "vue";
 import { getProductPageList, productAdd, productUpdate, productDelete, getProductCategoryList } from "@/api/product";
+import { getShopList } from "@/api/shop";
 import { deepClone, objectOverwrite } from "@/utils";
 
 const showLoading = ref(false)
@@ -202,8 +203,17 @@ const initProductCategoryList = () => {
     }
   })
 }
+const shopList = ref([])
+const initShopList = () => {
+  getShopList().then(res => {
+    if (res.success) {
+      shopList.value = res.data
+    }
+  })
+}
 onActivated(() => {
   initProductCategoryList()
+  initShopList()
 })
 const modalDialog = ref(false)
 const _data = {

@@ -39,6 +39,13 @@ export const getShopPageList = params => {
   })
 }
 
+export const getShopList = () => {
+  return request({
+    method: 'post',
+    url: '/jdstore/shop/getShopList'
+  })
+}
+
 export const shopAdd = data => {
   return request({
     method: 'post',

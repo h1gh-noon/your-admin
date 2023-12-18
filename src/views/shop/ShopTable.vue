@@ -11,14 +11,14 @@
               </div>
             </BButton>
           </div>
-          <div class="page-filter-item">
+          <!-- <div class="page-filter-item">
             <BButton pill variant="outline-primary">
               <div>
                 <SvgIcon iconClass="add" />
                 批量删除
               </div>
             </BButton>
-          </div>
+          </div> -->
         </div>
       </div>
       <TableTemplate :table-thead="tableList.thead">

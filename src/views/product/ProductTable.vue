@@ -34,8 +34,8 @@
             <BTd>{{ item.sales }}</BTd>
             <BTd>{{ item.price }}</BTd>
             <BTd>{{ item.oldPrice }}</BTd>
-            <BTd>{{ item.type }}</BTd>
-            <BTd>{{ item.shopId }}</BTd>
+            <BTd>{{ item.shopName }}</BTd>
+            <BTd>{{ item.cateName }}</BTd>
             <BTd>{{ item.productStock }}</BTd>
             <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
             <BTd style="width: 135px;" class="sticky-right">
@@ -99,9 +99,9 @@
         <BRow>
           <BCol>
 
-            <BFormGroup description="Let us know your type." label="type" label-for="input-horizontal" label-cols-sm="4"
+            <BFormGroup description="Let us know your cateId." label="cateId" label-for="input-horizontal" label-cols-sm="4"
               label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormSelect v-model="data.type" valueField="id" textField="name" :options="typeList" />
+              <BFormSelect v-model="data.cateId" valueField="id" textField="name" :options="typeList" />
             </BFormGroup>
           </BCol>
         </BRow>
@@ -155,14 +155,14 @@ const paginationData = reactive({
 const tableList = reactive({
   thead: [
     { key: 'name', label: '用户名' },
-    { key: 'imgUrl', label: '昵称' },
-    { key: 'sales', label: '昵称' },
-    { key: 'price', label: '昵称' },
-    { key: 'oldPrice', label: '昵称' },
-    { key: 'type', label: '库存' },
-    { key: 'shopId', label: 'shopId' },
+    { key: 'imgUrl', label: '图片' },
+    { key: 'sales', label: '销量' },
+    { key: 'price', label: '金额' },
+    { key: 'oldPrice', label: '原价' },
+    { key: 'shopName', label: '所属店铺' },
+    { key: 'cateName', label: '所属分类' },
     { key: 'productStock', label: '库存' },
-    { key: 'status', label: '用户状态' },
+    { key: 'status', label: '状态' },
     { key: 'option', label: '操作' }
   ],
   tbody: []
@@ -223,7 +223,7 @@ const _data = {
   sales: '',
   price: '',
   oldPrice: '',
-  type: '',
+  cateId: '',
   shopId: '',
   productStock: '',
   status: 0

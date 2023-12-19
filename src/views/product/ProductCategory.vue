@@ -17,7 +17,7 @@
         <template v-if="tableList.tbody.length">
           <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
             <BTd class="sticky-left">{{ item.name }}</BTd>
-            <BTd> {{ item.shopId }} </BTd>
+            <BTd> {{ item.shopName }} </BTd>
             <BTd> {{ item.type }} </BTd>
             <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
             <BTd style="width: 135px;" class="sticky-right">
@@ -88,7 +88,7 @@ const showLoading = ref(false)
 const tableList = reactive({
   thead: [
     { key: 'name', label: '名' },
-    { key: 'shopId', label: 'shopId' },
+    { key: 'shopName', label: '所属店铺' },
     { key: 'type', label: '图' },
     { key: 'status', label: '状态' },
     { key: 'option', label: '操作' }

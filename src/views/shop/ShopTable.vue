@@ -111,8 +111,9 @@
         <BRow>
           <BCol>
             <BFormGroup description="Let us know your status." label="status" label-for="input-horizontal"
-              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormInput v-model="data.status" trim placeholder="" />
+              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7">
+              <BFormRadio v-model="data.status" name="shop-status-radios" :value="1">启用</BFormRadio>
+              <BFormRadio v-model="data.status" name="shop-status-radios" :value="0">禁用</BFormRadio>
             </BFormGroup>
           </BCol>
         </BRow>
@@ -198,7 +199,7 @@ const _data = {
   expressPrice: '',
   descDetail: '',
   state: '',
-  status: 0
+  status: 1
 }
 const shopData = reactive({ data: deepClone(_data) })
 

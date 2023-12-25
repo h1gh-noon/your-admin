@@ -98,18 +98,17 @@
         </BRow>
         <BRow>
           <BCol>
-
-            <BFormGroup description="Let us know your cateId." label="cateId" label-for="input-horizontal" label-cols-sm="4"
+            <BFormGroup description="Let us know your shop." label="shopId" label-for="input-horizontal" label-cols-sm="4"
               label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormSelect v-model="data.cateId" valueField="id" textField="name" :options="typeList" />
+              <BFormSelect v-model="data.shopId" valueField="id" textField="name" :options="shopList" />
             </BFormGroup>
           </BCol>
         </BRow>
         <BRow>
           <BCol>
-            <BFormGroup description="Let us know your shop." label="shopId" label-for="input-horizontal"
+            <BFormGroup description="Let us know your cateId." label="cateId" label-for="input-horizontal"
               label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormSelect v-model="data.shopId" valueField="id" textField="name" :options="shopList" />
+              <BFormSelect v-model="data.cateId" valueField="id" textField="name" :options="typeListComputed" />
             </BFormGroup>
           </BCol>
         </BRow>
@@ -124,8 +123,9 @@
         <BRow>
           <BCol>
             <BFormGroup description="Let us know your status." label="status" label-for="input-horizontal"
-              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormInput v-model="data.status" trim placeholder="" />
+              label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7">
+              <BFormRadio v-model="data.status" name="product-status-radios" :value="1">启用</BFormRadio>
+              <BFormRadio v-model="data.status" name="product-status-radios" :value="0">禁用</BFormRadio>
             </BFormGroup>
           </BCol>
         </BRow>
@@ -141,7 +141,7 @@
 import TablePagination from "@/components/table/TablePagination.vue"
 import TableTemplate from "@/components/table/TableTemplate.vue";
 import { errorToast, successToast, infoToast } from "@/components/Toast";
-import { reactive, ref, toRefs, onActivated } from "vue";
+import { reactive, ref, toRefs, onActivated, computed } from "vue";
 import { getProductPageList, productAdd, productUpdate, productDelete, getProductCategoryList } from "@/api/product";
 import { getShopList } from "@/api/shop";
 import { deepClone, objectOverwrite } from "@/utils";
@@ -226,15 +226,19 @@ const _data = {
   cateId: '',
   shopId: '',
   productStock: '',
-  status: 0
+  status: 1
 }
 const productData = reactive({ data: deepClone(_data) })
+
+const typeListComputed = computed(() => productData.data.shopId ? typeList.value.filter(e => e.shopId === productData.data.shopId) : [])
+
 
 const dialogClose = () => {
   productData.data = deepClone(_data)
 }
 
 const editDialog = (item) => {
+  console.log(item)
   modalDialog.value = true
   objectOverwrite(productData.data, item)
 }

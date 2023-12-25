@@ -59,8 +59,8 @@
           <BCol>
             <BFormGroup description="Let us know your status." label="status" label-for="input-horizontal"
               label-cols-sm="4" content-cols-sm label-cols-lg="3" content-cols-lg="7">
-              <BFormRadio v-model="data.status" name="status-radios" :value="1">启用</BFormRadio>
-              <BFormRadio v-model="data.status" name="status-radios" :value="2">禁用</BFormRadio>
+              <BFormRadio v-model="data.status" name="sc-status-radios" :value="1">启用</BFormRadio>
+              <BFormRadio v-model="data.status" name="sc-status-radios" :value="0">禁用</BFormRadio>
             </BFormGroup>
           </BCol>
         </BRow>

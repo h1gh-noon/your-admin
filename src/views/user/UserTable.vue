@@ -63,7 +63,7 @@
               <BButton variant="danger" size="sm" @click="delHandler(item)">删除</BButton>
             </BTd>
           </BTr>
-          
+
         </template>
         <BTd v-else :colspan="tableList.thead && tableList.thead.length || 0">
           <div class="text-center">暂无数据...</div>
@@ -145,7 +145,8 @@ const searchField = reactive({
 const paginationData = reactive({
   currentPage: 1,
   pageSize: 20,
-  total: 0
+  total: 0,
+  sort: null
 })
 const tableList = reactive({
   thead: [
@@ -178,18 +179,19 @@ const sortChange = (e) => {
     }
   })
 
-  getUserPageListHander(typeof (e.$sort) === 'string' ? e.key + '-' + e.$sort : null)
+  paginationData.sort = typeof (e.$sort) === 'string' ? e.key + '-' + e.$sort : null
+  getUserPageListHander()
 }
 
-const getUserPageListHander = (sort) => {
+const getUserPageListHander = () => {
   showLoading.value = true
   const params = {
     currentPage: paginationData.currentPage,
     pageSize: paginationData.pageSize
   }
   // sortData.$slots为true时 为默认排序不传给后台
-  if (sort) {
-    params.sort = sort
+  if (paginationData.sort) {
+    params.sort = paginationData.sort
   }
   const data = searchField
   getUserPageList(params, data).then(res => {
@@ -321,6 +323,10 @@ const confirmDialogHandler = async () => {
     if (res.success) {
       successToast()
       modalDialogConfirm.value = false
+      if (confirmDialogInfo.value.type === 'delete' && tableList.tbody.length === 1 && paginationData.currentPage > 1) {
+        // 删除本页最后一个后去上一页
+        paginationData.currentPage--
+      }
     }
   } catch (error) {
   }

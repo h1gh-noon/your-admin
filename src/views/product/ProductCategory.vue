@@ -18,7 +18,6 @@
           <BTr v-for="(item, index) in tableList.tbody" :key="item.id" :variant="index % 2 ? 'info' : ''">
             <BTd class="sticky-left">{{ item.name }}</BTd>
             <BTd> {{ item.shopName }} </BTd>
-            <BTd> {{ item.type }} </BTd>
             <BTd>{{ item.status === 1 ? '启用' : '禁用' }}</BTd>
             <BTd style="width: 135px;" class="sticky-right">
               <BButton variant="primary" class="me-md-2" size="sm" @click="editDialog(item)">编辑</BButton>
@@ -53,18 +52,10 @@
         </BRow>
         <BRow>
           <BCol>
-            <BFormGroup description="Let us know your type." label="type" label-for="input-horizontal" label-cols-sm="4"
-              label-cols-lg="3" content-cols-sm content-cols-lg="7" valid-feedback="">
-              <BFormInput v-model="data.type" trim placeholder="" />
-            </BFormGroup>
-          </BCol>
-        </BRow>
-        <BRow>
-          <BCol>
             <BFormGroup description="Let us know your status." label="status" label-for="input-horizontal"
               label-cols-sm="4" label-cols-lg="3" content-cols-sm content-cols-lg="7">
               <BFormRadio v-model="data.status" name="status-radios" :value="1">启用</BFormRadio>
-              <BFormRadio v-model="data.status" name="status-radios" :value="2">禁用</BFormRadio>
+              <BFormRadio v-model="data.status" name="status-radios" :value="0">禁用</BFormRadio>
             </BFormGroup>
           </BCol>
         </BRow>
@@ -89,7 +80,6 @@ const tableList = reactive({
   thead: [
     { key: 'name', label: '名' },
     { key: 'shopName', label: '所属店铺' },
-    { key: 'type', label: '图' },
     { key: 'status', label: '状态' },
     { key: 'option', label: '操作' }
   ],
@@ -127,7 +117,6 @@ const _data = {
   id: null,
   name: '',
   shopId: '',
-  type: '',
   status: 1
 }
 const dataInfo = reactive({ data: deepClone(_data) })

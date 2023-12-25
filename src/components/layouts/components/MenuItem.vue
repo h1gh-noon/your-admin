@@ -3,7 +3,7 @@
   <template v-if="showDropFlag">
     <div class="menu-title menu-title-dropdown" @click="itemRoute.visible = !itemRoute.visible">
       <SvgIcon :iconClass="itemRoute?.meta?.icon" />
-      <div class="menu-title-text" :title="itemRoute.meta?.title ?? ''">
+      <div class="menu-title-text dropdown-title-text" :title="itemRoute.meta?.title ?? ''">
         {{ itemRoute.meta?.title ?? '' }}
       </div>
       <SvgIcon iconClass="down" style="transition: transform 0.2s;" :class="{ 'icon-down-actived': itemRoute.visible }" />
@@ -84,8 +84,12 @@ watchEffect(() => {
   
   display: flex;
   align-items: center;
-  
 }
+
+.dropdown-title-text {
+  font-weight: bold;
+}
+
 .menu-title-dropdown {
   color: #15559a;
 }

@@ -140,11 +140,11 @@ const paginationData = reactive({
 })
 const tableList = reactive({
   thead: [
-    { key: 'name', label: '用户名' },
-    { key: 'imgUrl', label: '昵称' },
-    { key: 'expressLimit', label: '微信头像' },
-    { key: 'expressPrice', label: '用户状态' },
-    { key: 'status', label: '用户状态' },
+    { key: 'name', label: '店铺名' },
+    { key: 'imgUrl', label: '图片' },
+    { key: 'expressLimit', label: '起送价格' },
+    { key: 'expressPrice', label: '起送运费' },
+    { key: 'status', label: '状态' },
     { key: 'option', label: '操作' }
   ],
   tbody: []

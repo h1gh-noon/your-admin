@@ -237,7 +237,7 @@ const validList = reactive({
 })
 // 字段校验是否通过
 const formValidFlag = computed(() => {
-  return !Object.keys(validList).some(e => !validList[e].valid)
+  return Object.keys(validList).every(e => validList[e].valid)
 })
 
 
@@ -251,7 +251,7 @@ const editDialog = (item) => {
 }
 const { data } = toRefs(userData)
 const confirmHandler = async () => {
-  if (!formValidFlag) {
+  if (!formValidFlag.value) {
     errorToast('请检查表单!')
     return
   }

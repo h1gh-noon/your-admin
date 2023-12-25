@@ -40,7 +40,9 @@ const emit = defineEmits(['paginationChange'])
 const currentPage = computed({
   get: () => props.currentPage,
   set: (e) => {
-    emit('paginationChange', e)
+    if (e !== currentPage.value) {
+      emit('paginationChange', e)
+    }
   }
 })
 const setPageSize = (val) => {

@@ -140,7 +140,6 @@ onMounted(() => {
   .avatar-img {
     width: 25%;
     border-radius: 50%;
-    transform: rotateY(180deg);
   }
 }
 
